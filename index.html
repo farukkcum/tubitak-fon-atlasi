@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>TÜBİTAK Fon Atlası</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a "başkanlık" map band on top, application channels, a deadline rail, then a filterable atlas of every TÜBİTAK funding stream grouped by layer. Same system as the Horizon Europe atlas. */
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --surface-2:#e9edf3; --fg:#122033; --muted:#55657a; --line:#d4dbe5;
+  --accent:#b8262e; --star:#d9a400; --star-bg:#fbf1cf; --urgent:#b4321f; --urgent-bg:#fbe5e1;
+  --l-ard:#3b4fc4; --l-res:#0f7c79; --l-burs:#1e7a4a; --l-etk:#4d7f1f; --l-uid:#7a3fb0; --l-tey:#c15a12; --l-gir:#a33d6b; --l-sint:#8a6a12; --l-bt:#2b74a8; --l-out:#5f6b7a; color-scheme:light;
+  --f-display:"Archivo","Arial Narrow",Arial,sans-serif; --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif; --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.55;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 56px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:36px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(30px,5vw,48px);font-weight:800;font-stretch:80%;line-height:1.02}
+h2{font-size:22px;font-weight:700;font-stretch:85%}
+h3{font-size:16px;font-weight:700}
+p{margin:0}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.eyebrow{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+header{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:28px;align-items:end}
+header .lead{color:var(--muted);max-width:62ch;margin-top:12px}
+.asof{font-family:var(--f-mono);font-size:12px;color:var(--muted);border-left:2px solid var(--star);padding-left:10px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.stats div{background:var(--surface);padding:12px 14px}
+.stats b{display:block;font-family:var(--f-display);font-size:26px;font-weight:800;font-variant-numeric:tabular-nums}
+.stats span{font-size:12px;color:var(--muted)}
+.map{display:grid;gap:8px}
+.map-row{display:grid;gap:8px}
+.map .blk{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;min-width:0;text-align:left;font:inherit;color:inherit;cursor:pointer;border-top:4px solid var(--c)}
+.map .blk:hover{background:var(--surface-2)}
+.map .blk .k{font-family:var(--f-mono);font-size:11px;color:var(--c);letter-spacing:.06em;text-transform:uppercase}
+.map .blk .t{font-family:var(--f-display);font-weight:700;font-size:17px;font-stretch:85%;line-height:1.15}
+.map .blk .s{font-size:12.5px;color:var(--muted)}
+.row3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.row1{grid-template-columns:1fr}
+.row2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.map-cap{font-size:12.5px;color:var(--muted)}
+.map .band{border-style:dashed}
+.routes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.route{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:6px}
+.route .tag{align-self:flex-start}
+.route p{font-size:13.5px;color:var(--muted)}
+.rail{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.dl{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;align-items:start;cursor:pointer;text-align:left;font:inherit;color:inherit}
+.dl:hover{background:var(--surface-2)}
+.dl .date{font-family:var(--f-display);font-weight:800;font-size:22px;line-height:1;font-variant-numeric:tabular-nums;grid-row:span 2;text-align:center;min-width:46px}
+.dl .date small{display:block;font-family:var(--f-mono);font-size:10.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.dl .nm{font-weight:600;font-size:13.5px;line-height:1.3}
+.dl .left{font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
+.dl.soon{border-color:var(--urgent);background:var(--urgent-bg)}
+.dl.soon .left{color:var(--urgent);font-weight:500}
+.controls{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--line)}
+.search{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.search input{flex:1 1 260px;min-width:0;font:inherit;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg)}
+.count{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:inherit;font-size:12.5px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.chip i{width:8px;height:8px;border-radius:50%;background:var(--c,var(--muted));display:inline-block}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.chip[aria-pressed="true"] i{background:var(--bg)}
+.reset{font:inherit;font-size:12.5px;background:none;border:none;color:var(--accent);cursor:pointer;text-decoration:underline;padding:4px}
+.layer{display:flex;flex-direction:column;gap:12px;scroll-margin-top:150px}
+.layer-h{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;border-bottom:2px solid var(--c);padding-bottom:6px}
+.layer-h .n{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.layer-intro{color:var(--muted);font-size:13.5px;max-width:80ch}
+.group-h{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--c);margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card.flash{outline:2px solid var(--star);outline-offset:1px}
+.card-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.card h3{font-size:15.5px;line-height:1.25;min-width:0}
+.card .no{font-family:var(--f-mono);font-size:11.5px;font-weight:500;color:var(--c);border:1px solid var(--c);border-radius:4px;padding:1px 6px;white-space:nowrap;flex:none}
+.card .d{font-size:13.5px}
+.meta{display:grid;grid-template-columns:auto minmax(0,1fr);gap:3px 10px;font-size:12.5px}
+.meta dt{color:var(--muted);font-family:var(--f-mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding-top:2px}
+.meta dd{margin:0;min-width:0}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:11px;font-family:var(--f-mono);padding:2px 7px;border-radius:4px;background:var(--surface-2);color:var(--muted);white-space:nowrap}
+.tag.ssh{background:var(--star-bg);color:var(--fg)}
+.tag.open{background:var(--urgent-bg);color:var(--urgent)}
+.tag.closed{text-decoration:line-through}
+.tag.cont{color:var(--fg)}
+.card a.go{font-size:12.5px;margin-top:auto;align-self:flex-start}
+.empty{padding:28px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:8px}
+.notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.note{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.note p,.note li{font-size:13.5px}
+.note ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
+.sources{font-size:12.5px;color:var(--muted);columns:2;column-gap:28px}
+.sources a{display:block;break-inside:avoid;margin-bottom:4px}
+section{display:flex;flex-direction:column;gap:14px}
+.sec-h{display:flex;flex-direction:column;gap:4px}
+@media (max-width:860px){
+  header{grid-template-columns:1fr}
+  .routes{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .row3{grid-template-columns:1fr}
+  .notes{grid-template-columns:1fr}
+  .sources{columns:1}
+}
+@media (max-width:520px){.routes,.row2{grid-template-columns:1fr}.grid{grid-template-columns:1fr}}
+.sync{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
+.btn{font:inherit;font-size:13.5px;font-weight:600;padding:8px 14px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+.btn[disabled]{opacity:.6;cursor:progress}
+.sync-info{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+a.dl{text-decoration:none}
+.tag.live{background:var(--surface-2);color:var(--fg)}
+.card .links{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:auto}
+.card .links a.go{margin-top:0}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header>
+  <div>
+    <div class="eyebrow">TÜBİTAK destek programları · 2026 takvimi</div>
+    <h1>TÜBİTAK Fon Atlası</h1>
+    <p class="lead">ARDEB proje programlarından BİDEB burslarına, TEYDEB sanayi desteklerinden ortaklık çağrılarına ve Bilim ve Toplum programlarına kadar TÜBİTAK'ın fonladığı bütün destek türleri tek haritada. Her kartta desteğin büyüklüğü, kimin başvurabileceği, hangi sistemden başvurulduğu ve sıradaki tarih yazıyor.</p>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div class="stats" id="stats"></div>
+    <p class="asof">Program bilgileri 26 Ekim 2026 itibarıyla derlendi; son başvuru tarihleri her sabah TÜBİTAK duyurularından otomatik taranır. Proje bütçe üst limitleri 1 Şubat 2026, burs tutarları 1 Ocak 2026 itibarıyladır. Başvurudan önce çağrı metnini teyit edin.</p>
+  </div>
+</header>
+
+<section>
+  <div class="sec-h"><div class="eyebrow">Yapı</div><h2>Başkanlıklar ve destek katmanları</h2></div>
+  <div class="map" id="map">
+    <div class="map-row row3">
+      <button class="blk" data-jump="ard" style="--c:var(--l-ard)" type="button"><span class="k">ARDEB</span><span class="t">Akademik Ar-Ge projeleri</span><span class="s">1001 · 1002 · 1003 · 1004 · 1005 · 1007 · 3005 · 3501 · Kutup</span></button>
+      <button class="blk" data-jump="res" style="--c:var(--l-res)" type="button"><span class="k">BİDEB</span><span class="t">Araştırmacı ve kariyer destekleri</span><span class="s">2218 · 2219 · 2221 · 2232 · 2236 · 2247</span></button>
+      <button class="blk" data-jump="burs" style="--c:var(--l-burs)" type="button"><span class="k">BİDEB</span><span class="t">Öğrenci bursları ve yarışmalar</span><span class="s">2205 · 2209 · 2210 · 2211 · 2213 · 2214 · 2244 · 2250 · STAR</span></button>
+    </div>
+    <div class="map-row row3">
+      <button class="blk" data-jump="etk" style="--c:var(--l-etk)" type="button"><span class="k">BİDEB</span><span class="t">Bilimsel etkinlik destekleri</span><span class="s">2223 düzenleme · 2224 katılım · 2237 eğitim</span></button>
+      <button class="blk" data-jump="tey" style="--c:var(--l-tey)" type="button"><span class="k">TEYDEB</span><span class="t">Sanayi Ar-Ge projeleri</span><span class="s">1501 · 1505 · 1507 · 1511 · 1515 · 1707 · 1711 · 1832</span></button>
+      <button class="blk" data-jump="gir" style="--c:var(--l-gir)" type="button"><span class="k">TEYDEB</span><span class="t">Girişimcilik, TTO ve patent</span><span class="s">BiGG · 1513 · 1514 · 1601 · 1602 · 1702</span></button>
+    </div>
+    <div class="map-row row1">
+      <button class="blk" data-jump="uid" style="--c:var(--l-uid)" type="button"><span class="k">UİDB · Uluslararası İşbirliği</span><span class="t">1071 ve ortak çağrılar, ikili ve çok taraflı programlar</span><span class="s">Ufuk Avrupa ortaklıkları (DUT, Water4All, Biodiversa+, FOREST, SBEP) · PRIMA · 25xx ikili çağrılar · COST ve 2515 · Belmont Forum · NATO SPS · Ufuk Avrupa ulusal teşvikleri</span></button>
+    </div>
+    <div class="map-row row2">
+      <button class="blk" data-jump="sint" style="--c:var(--l-sint)" type="button"><span class="k">TEYDEB · uluslararası</span><span class="t">Eureka, Eurostars ve uluslararası sanayi</span><span class="s">1509 · 1709 · 1719 · Globalstars · Innowwide</span></button>
+      <button class="blk" data-jump="bt" style="--c:var(--l-bt)" type="button"><span class="k">BİTO · Bilim ve Toplum</span><span class="t">Toplum, okul ve bilim iletişimi</span><span class="s">4001–4009 · Bilim Söyleşileri · Milli Teknoloji Atölyeleri</span></button>
+    </div>
+    <div class="map-row row1">
+      <button class="blk band" data-jump="out" style="--c:var(--l-out)" type="button"><span class="k">Çevre</span><span class="t">Ödüller, uluslararası burslar ve köprüler</span><span class="s">TÜBİTAK Bilim Ödülleri · EMBO · ICGEB · TWAS · 2216 · Horizon Europe Fon Atlası</span></button>
+    </div>
+    <p class="map-cap">BİDEB kendi sayfalarında araştırmacı, burs ve etkinlik desteklerini ayrı başlıklarda toplar; burada da üç ayrı satır olarak gösterildi. Bir katmana tıklamak atlasta o bölüme götürür.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-h"><div class="eyebrow">Başvuru kanalları</div><h2>Hangi sistemden başvurulur?</h2><p class="layer-intro">TÜBİTAK'ta başvuru sistemi başkanlığa göre değişir. Hesap tarafında ortak nokta ARBİS kaydıdır; ARDEB ve UİDB başvuruları kurum yetkilisinin e-imzasıyla tamamlanır.</p></div>
+  <div class="routes" id="routes"></div>
+</section>
+
+<section>
+  <div class="sec-h"><div class="eyebrow">Takvim</div><h2>Yaklaşan son başvuru tarihleri</h2><p class="layer-intro">Bugünden itibaren sıralı. Kırmızı kenarlılar 30 gün içinde. Ortak çağrılarda gösterilen tarih TÜBİTAK'a yapılan ulusal başvurunun tarihidir; uluslararası son tarih birkaç gün önce. Bir tarihe tıklamak ilgili kartı açar.</p></div>
+  <div class="sync"><button class="btn" id="refresh" type="button">Takvimi güncelle</button><span class="sync-info" id="syncInfo" aria-live="polite">Takvim yükleniyor…</span></div>
+  <div class="rail" id="rail"></div>
+</section>
+
+<section id="atlas-sec">
+  <div class="sec-h"><div class="eyebrow">Atlas</div><h2>Bütün destek akışları</h2></div>
+  <div class="controls">
+    <div class="search"><input id="q" type="search" placeholder="Ara: 1001, doktora sonrası, kongre, göç, su, KOBİ…" aria-label="Atlasta ara"><span class="count" id="count"></span><button class="reset" id="reset" type="button">Filtreleri temizle</button></div>
+    <div class="chips" id="layerChips" aria-label="Katman filtresi"></div>
+    <div class="chips" id="otherChips" aria-label="Diğer filtreler"></div>
+  </div>
+  <div id="atlas" style="display:flex;flex-direction:column;gap:32px"></div>
+</section>
+
+<section>
+  <div class="sec-h"><div class="eyebrow">Okuma notları</div><h2>Atlası kullanırken</h2></div>
+  <div class="notes">
+    <div class="note"><h3>Başkanlıkların mantığı</h3><ul>
+      <li>ARDEB projeyi fonlar: yürütücü ve ekip, kurum üzerinden, bütçeli Ar-Ge projesi. Çoğu program yıl boyu açık, 1001 yılda iki dönem.</li>
+      <li>BİDEB kişiyi fonlar: burs, aylık ödeme, araştırma paketi, etkinlik desteği. Neredeyse hepsi dönemsel çağrıyla ve TYBS üzerinden.</li>
+      <li>TEYDEB şirketi fonlar. Akademisyen 1505'te yürütücü kuruluş, diğer programlarda hizmet alımı ya da danışman olarak yer alır.</li>
+      <li>UİDB uluslararası çağrıların ulusal ayağıdır. Yabancı ortaklı başvurunun Türk ekibi kendi bütçesini 1071 ile TÜBİTAK'tan alır.</li>
+    </ul></div>
+    <div class="note"><h3>Yılın ritmi</h3><ul>
+      <li>1001: 1. dönem Ocak–Şubat, 2. dönem Temmuz–Eylül.</li>
+      <li>2223 ve 2224: yılda üç dönem (Şubat, Haziran, Ekim). Etkinliğin başlangıcı başvuru döneminin kapanışından sonra olmalı.</li>
+      <li>2221 konuk bilim insanı: yılda dört dönem, gelişten önceki dönemde başvurulur.</li>
+      <li>2219 ve 2214-A: Temmuz–Eylül. 2247-A ve 2247-D: Ekim–Aralık. 2209: Ekim–Kasım.</li>
+      <li>Ufuk Avrupa ortak çağrılarının ilk aşaması çoğunlukla Eylül–Aralık arasında kapanır.</li>
+    </ul></div>
+    <div class="note"><h3>Sosyal ve beşerî bilimler için kısa yol</h3><ul>
+      <li>Sarı "SBB" etiketli kartlar sosyal ve beşerî bilimlerin ana alan olabildiği akışlardır. Bu etiket program kapsamından çıkarılmış bir değerlendirmedir, resmî sınıflandırma değildir.</li>
+      <li>Yıl boyu açık olanlar: 3005-A (kamu kurumuyla politika araştırması), 3005-B (teknolojinin toplumsal etkileri), 3501 (doktoradan sonraki ilk 7 yıl), 1002-A ve 2515 (COST aksiyonu üyeleri).</li>
+      <li>Dönemsel olanlar: 1001, 2218, 2219, 2247-D, 2224-A, 2223-B ve DUT, Biodiversa+, Water4All gibi yönetişim ve sosyo-ekolojik başlık içeren ortak çağrılar.</li>
+    </ul></div>
+    <div class="note"><h3>Horizon Europe ile bağlantılar</h3><ul>
+      <li>1071, Ufuk Avrupa ortak finanse edilen ortaklıklarının ve PRIMA'nın Türk tarafındaki fon kanalıdır.</li>
+      <li>2247-B, ERC'de A veya B puanı alıp fonlanamayan öneriyi iki yıl destekler; karşılığında ERC'ye yeniden başvuru şartı vardır.</li>
+      <li>2236-A (CoCirculation 3) ve 2236-B, MSCA COFUND ile bağlantılıdır.</li>
+      <li>Ufuk Avrupa ulusal teşvikleri (koordinatörlük, seyahat, ERC baş araştırmacı geliştirme, MSCA ön değerlendirme) ayrıca ufukavrupa.org.tr'de duyurulur.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-h"><div class="eyebrow">Kaynaklar</div><h2>Dayanaklar</h2></div>
+  <p class="layer-intro">Program listeleri TÜBİTAK'ın akademik, sanayi, bilim ve toplum, bilimsel etkinlik, uluslararası işbirliği ve burs sayfalarından; tarihler Temmuz–Ekim 2026 TÜBİTAK duyurularından alındı.</p>
+  <div class="sources">
+    <a href="https://tubitak.gov.tr/tr/destekler/akademik/ulusal-destek-programlari">Akademik ulusal destek programları</a>
+    <a href="https://tubitak.gov.tr/tr/destekler/akademik/uluslararasi-destek-programlari">Akademik uluslararası destek programları</a>
+    <a href="https://tubitak.gov.tr/tr/destekler/sanayi/ulusal-destek-programlari">Sanayi ulusal destek programları</a>
+    <a href="https://tubitak.gov.tr/tr/destekler/sanayi/uluslararasi-programlar">Sanayi uluslararası programlar</a>
+    <a href="https://tubitak.gov.tr/tr/destekler/bilim-toplum/ulusal-programlar">Bilim ve Toplum ulusal programları</a>
+    <a href="https://tubitak.gov.tr/tr/destekler/bilimsel-etkinlik/etkinlik-duzenleme">Etkinlik düzenleme destekleri</a>
+    <a href="https://tubitak.gov.tr/tr/destekler/bilimsel-etkinlik/etkinliklere-katilim-destekleri">Etkinliklere katılım destekleri</a>
+    <a href="https://tubitak.gov.tr/tr/destekler/uluslararasi-is-birlikleri/coklu-is-birligi-programlari">Çok taraflı işbirliği programları</a>
+    <a href="https://tubitak.gov.tr/tr/burslar/doktora-sonrasi/arastirma-burs-programlari">Doktora sonrası araştırma bursları</a>
+    <a href="https://tubitak.gov.tr/tr/burslar/lisansustu/egitim-burs-programlari">Lisansüstü eğitim bursları</a>
+    <a href="https://tubitak.gov.tr/tr/burslar/lisansustu/arastirma-burs-programlari">Lisansüstü araştırma bursları</a>
+    <a href="https://tubitak.gov.tr/tr/burslar/lisans/burs-programlari">Lisans burs programları</a>
+    <a href="https://tubitak.gov.tr/tr/duyuru">TÜBİTAK duyurular (Ekim 2026)</a>
+    <a href="https://tubitak.gov.tr/tr/duyuru/1005-ulusal-yeni-fikirler-ve-urunler-arastirma-destek-programina-iliskin-bilgilendirme">1005 programının geçici olarak kapatılması</a>
+    <a href="https://tubitak.gov.tr/tr/duyuru/3005-sosyal-ve-beseri-bilimlerde-yenilikci-cozumler-arastirma-projeleri-destek-programi-iki-ayri-modul-olarak-guncellendi">3005'in iki modüle ayrılması</a>
+    <a href="https://tubitak.gov.tr/tr/duyuru/2247-ulusal-lider-arastirmacilar-programi-ve-2247-d-ulusal-genc-liderler-programi-2026-yili-cagrilari-acildi">2247-A ve 2247-D 2026 çağrıları</a>
+    <a href="https://tubitak.gov.tr/tr/duyuru/2209-universite-ogrencileri-arastirma-projeleri-destekleme-programi-ve-2209-b-universite-ogrencileri-sanayiye-yonelik-arastirma-projeleri-destegi-programi-2026-yili-cagrilari-acildi">2209-A ve 2209-B 2026 çağrıları</a>
+    <a href="https://tubitak.gov.tr/tr/duyuru/2224-bilimsel-etkinliklere-katilimi-destekleme-programlari-2026-yili-3-donem-cagrilari-acildi">2224 2026/3 dönemi</a>
+    <a href="https://tubitak.gov.tr/tr/duyuru/2223-yurt-ici-bilimsel-etkinlikleri-destekleme-programlari-2026-yili-3-donem-cagrilari-acildi">2223 2026/3 dönemi</a>
+    <a href="https://tubitak.gov.tr/tr/duyuru/biodiversa-2026-yili-yeni-ekosistemler-biyocesitlilik-sosyo-ekolojik-sonuclar-ve-gelecekteki-seyirler-biodivfuture-baslikli-cagrisi-acildi">Biodiversa+ BiodivFuture 2026</a>
+    <a href="https://tubitak.gov.tr/tr/duyuru/ufuk-avrupa-programi-kentsel-gecisleri-surdurulebilir-bir-gelecege-yonlendirme-ortakligi-dut-2026-cagrisi-acildi">DUT 2026</a>
+    <a href="https://tubitak.gov.tr/tr/duyuru/ufuk-avrupa-programi-gezegen-icin-su-guvenligi-ortakligi-water4all-2026-cok-uluslu-ortak-cagrisi-basvuruya-acildi">Water4All 2026</a>
+    <a href="https://tubitak.gov.tr/tr/duyuru/ufuk-avrupa-programi-forest-ortakligi-2026-ortak-cagrisi-basvurulara-acildi">FOREST 2026</a>
+    <a href="https://tubitak.gov.tr/tr/duyuru/ufuk-avrupa-programi-surdurulebilir-mavi-ekonomi-ortakligi-sbep-2026-yili-cok-uluslu-ortak-cagrisi-basvuruya-acildi">SBEP 2026</a>
+    <a href="https://tubitak.gov.tr/tr/duyuru/2531-tubitak-daad-almanya-ikili-birligi-seyahat-destek-programi-7-cagrisi-acildi">2531 TÜBİTAK–DAAD 7. çağrı</a>
+    <a href="https://tubitak.gov.tr/tr/duyuru/2572-tubitak-urdun-ulusal-arastirma-gelistirme-merkezi-ncrd-ikili-isbirligi-cagrisi-basvuruya-acildi">2572 TÜBİTAK–NCRD Ürdün</a>
+    <a href="https://tubitak.gov.tr/tr/duyuru/2518-tubitak-ozbekistan-cumhuriyeti-yuksekogretim-bilim-ve-yenilikler-bakanligi-mhesi-uzbekistan-ikili-birligi-cagrisi-basvuruya-acildi-0">2518 TÜBİTAK–Özbekistan</a>
+    <a href="https://tubitak.gov.tr/tr/duyuru/eureka-network-turkiye-ispanya-2026-yili-cagrisi-acildi">Eureka Türkiye–İspanya 2026</a>
+    <a href="https://tubitak.gov.tr/tr/duyuru/eureka-globalstars-japonya-2026-cagrisi-acildi">Eureka Globalstars Japonya 2026</a>
+    <a href="https://tubitak.gov.tr/tr/duyuru/yenilikci-kobiler-icin-avrupa-ortakligi-innowwide-5-cagrisi-acildi">Innowwide 5. çağrı</a>
+    <a href="https://tubitak.gov.tr/tr/duyuru/1832-sanayide-yesil-donusum-2026-2-cagrisi-basvuruya-acildi">1832 Sanayide Yeşil Dönüşüm 2026-2</a>
+    <a href="https://tubitak.gov.tr/tr/duyuru/turkiyenin-ilk-yatirim-tabanli-girisimcilik-destek-programi-olan-bigg-yatirim-programinin-2026-2-cagrisi-acildi">BiGG Yatırım 2026-2</a>
+    <a href="https://tubitak.gov.tr/tr/duyuru/1007-programi-balistik-kiyafet-gelistirilmesi-projesi-cagrisi-acildi">1007 SAVTAG çağrıları</a>
+    <a href="https://tubitak.gov.tr/tr/duyuru/embo-doktora-sonrasi-arastirma-burslari-2027-yili-1-donem-basvurulari-basladi">EMBO 2027 1. dönem</a>
+    <a href="https://ankaraka.org.tr/sites/default/files/article-documents/ufukavrupa_devletdestekleri2026_1.pdf">Ufuk Avrupa ulusal destekleri 2026 (Ankara Kalkınma Ajansı)</a>
+  </div>
+</section>
+</div>
+
+<script>
+const TODAY = (()=>{ const d = new Date(); d.setHours(0,0,0,0); return d; })();
+const JSON_URL = "takvim.json";
+const LAYERS = {
+  ard:{label:"ARDEB · Akademik Ar-Ge projeleri", short:"ARDEB", c:"--l-ard", intro:"Araştırma Destek Programları Başkanlığı. Üniversite, kamu ve özel sektör araştırmacılarının yürüttüğü bütçeli Ar-Ge projeleri. Başvuru ARDEB-PBS'den, yürütücü için çoğu programda doktora ve tam zamanlı kadro şartı var. Burs tutarları her programda aynı: doktora öğrencisi en çok 32.500 TL, doktora sonrası 43.500 TL/ay."},
+  res:{label:"BİDEB · Araştırmacı ve kariyer destekleri", short:"Araştırmacı", c:"--l-res", intro:"Bilim İnsanı Destek Programları Başkanlığı'nın doktora sonrası ve kıdemli araştırmacı programları. Kişiye bağlı destekler: aylık burs, araştırma başlangıç paketi, proje bütçesi. Başvurular TYBS üzerinden ve dönemsel çağrıyla."},
+  burs:{label:"BİDEB · Öğrenci bursları ve yarışmalar", short:"Burslar", c:"--l-burs", intro:"Lisans, yüksek lisans ve doktora öğrencilerine burslar, yurt dışı araştırma bursları, sanayi doktorası ve öğrenci araştırma projeleri. Öğretim üyesi için burada da bir rol var: danışman, ev sahibi ya da STAR ve 2244'te proje yürütücüsü."},
+  etk:{label:"BİDEB · Bilimsel etkinlik destekleri", short:"Etkinlik", c:"--l-etk", intro:"Kongre ve sempozyum düzenleme (2223), yurt içi ve yurt dışı bildiri sunumu (2224), bilimsel eğitim etkinliği (2237). 2223 ve 2224 yılda üç dönem açılır; etkinlik başvuru döneminin kapanışından sonra başlamalıdır."},
+  uid:{label:"UİDB · Uluslararası işbirliği", short:"Uluslararası", c:"--l-uid", intro:"Uluslararası İşbirliği Daire Başkanlığı'nın yürüttüğü ortak çağrılar. Türk ekip yabancı ortaklarla birlikte uluslararası başvuru yapar, kendi bütçesini 1071 ile UİDB-PBS'ye yapılan ulusal başvurudan alır. Uluslararası ve ulusal son tarih ayrı."},
+  tey:{label:"TEYDEB · Sanayi Ar-Ge projeleri", short:"TEYDEB", c:"--l-tey", intro:"Teknoloji ve Yenilik Destek Programları Başkanlığı. Başvuran sermaye şirketidir, başvurular PRODİS'ten. Üniversite 1505'te yürütücü, diğerlerinde ortak, hizmet sağlayıcı ya da danışman olarak yer alır."},
+  gir:{label:"TEYDEB · Girişimcilik, teknoloji transferi ve patent", short:"Girişim ve TT", c:"--l-gir", intro:"Bireysel girişimcilere hibe ve yatırım (BiGG), TTO'lar ve girişim sermayesi fonları, patent ve teknoloji transferi destekleri."},
+  sint:{label:"TEYDEB · Uluslararası sanayi Ar-Ge", short:"Eureka", c:"--l-sint", intro:"Eureka ağı, kümeleri ve Eurostars üzerinden yabancı ortaklı şirket projeleri. Uluslararası başvuru Eureka platformuna, ulusal başvuru 1509 ya da 1709 kapsamında PRODİS'e yapılır."},
+  bt:{label:"BİTO · Bilim ve Toplum", short:"Bilim ve Toplum", c:"--l-bt", intro:"Bilim ve Toplum Başkanlığı. Bilim okulları, fuarlar, şenlikler, bilim merkezleri, kapsayıcı eğitim ve bilim iletişimi projeleri. Başvuran genellikle üniversite, okul, belediye ya da sivil toplum kuruluşu; başvurular BİTO-PBS ve BİLİMİZ portalından."},
+  out:{label:"Çevre: ödüller, uluslararası kuruluş bursları ve köprüler", short:"Çevre", c:"--l-out", intro:"Proje desteği olmayan ama TÜBİTAK üzerinden yürüyen kanallar: ödüller, TÜBİTAK'ın üye olduğu kuruluşların bursları, yabancı araştırmacılara burslar ve Horizon Europe köprüsü."}
+};
+const ROUTES = {
+  ardeb:{label:"ARDEB-PBS", d:"ardeb-pbs.tubitak.gov.tr. ARBİS hesabıyla giriş, çevrim içi başvuru, ardından kurum yetkilisinin e-imzası. 1001'de form 25 sayfa, Arial 9."},
+  tybs:{label:"TYBS / e-BİDEB", d:"tybs.tubitak.gov.tr. Burs, doktora sonrası ve etkinlik başvuruları. Bazı programlarda (2209, 2223) kurum onayı ayrı bir aşamadır."},
+  prodis:{label:"PRODİS (e-TEYDEB)", d:"eteydeb.tubitak.gov.tr. Şirket başvuruları ve dönemsel raporlar. 1505'te başvuruyu üniversite yapar, müşteri kuruluş şirkettir."},
+  uidb:{label:"UİDB-PBS + uluslararası başvuru", d:"uidb-pbs.tubitak.gov.tr. Ortak çağrılarda çift başvuru: önce çağrı sekretaryasına, birkaç gün içinde TÜBİTAK'a ulusal başvuru."},
+  bito:{label:"BİTO-PBS / BİLİMİZ", d:"bilimtoplum-pbs.tubitak.gov.tr ve bilimiz.tubitak.gov.tr. Bilim ve Toplum projeleri, fuar ve söyleşi başvuruları."},
+  ext:{label:"Dış portal", d:"Başvurunun asıl kısmı başka bir sistemde yapılır: COST e-services, EMBO, Eureka platformu, hamle.gov.tr, ufukavrupa.org.tr."}
+};
+const SOC = "Doktora öğrencisi en çok 32.500 TL, doktora sonrası 43.500 TL/ay burs eklenebilir.";
+const D = [
+/* ---------- ARDEB ---------- */
+{l:"ard",g:"Temel proje programları",no:"1001",n:"Bilimsel ve Teknolojik Araştırma Projelerini Destekleme Programı",d:"TÜBİTAK'ın ana araştırma programı. Yeni bilgi üreten ya da teknolojik bir sorunu çözen bütün alanlardaki projeler; sosyal ve beşerî bilimler SOBAG panellerinde değerlendirilir. Özgün değer, yöntem, proje yönetimi ve yaygın etki üzerinden puanlanır.",t:"En çok 3.000.000 TL (bursiyerler dahil, PTİ ve kurum hissesi hariç) · 36 ay",w:"Doktoralı, kurumunda tam zamanlı araştırmacı. Vakıf, dernek ve kooperatifler başvuramaz.",r:"ardeb",nx:"2026/2 dönemi 14 Eylül'de kapandı. 2027/1 dönemi Ocak 2027'de bekleniyor.",dl:"2026-09-14",s:1,u:"https://tubitak.gov.tr/tr/destekler/akademik/ulusal-destek-programlari/1001-bilimsel-ve-teknolojik-arastirma-projelerini-destekleme-programi"},
+{l:"ard",g:"Temel proje programları",no:"1001 · UDAP",n:"Ulusal Deprem Araştırmaları Programı Ortak Çağrısı",d:"1001 kapsamında TÜBİTAK ile AFAD'ın ortak finanse ettiği deprem araştırmaları çağrısı. Aynı sistemde 1004 Platformları İşbirliği Çağrısı da özel çağrı olarak açık.",t:"1001 kuralları, ortak finansman",w:"1001 ile aynı.",r:"ardeb",nx:"Süre uzatılarak 30 Eylül 2026'da kapandı.",dl:"2026-09-30",u:"https://tubitak.gov.tr/tr/duyuru/1001-udap-ulusal-deprem-arastirmalari-programi-ortak-cagrisinin-basvuru-suresi-uzatildi"},
+{l:"ard",g:"Temel proje programları",no:"1002-A",n:"Hızlı Destek Modülü",d:"Acil araştırma ihtiyaçları için kısa süreli, küçük bütçeli projeler. Doktora tezinden doğan Ar-Ge projeleri de desteklenir; tez aşamasındaki doktora öğrencisi yürütücü olabilir.",t:"Yıllık en çok 150.000 TL (burslar dahil) · 12 ay · PTİ yok",w:"Doktoralı tam zamanlı araştırmacı ya da tez aşamasındaki doktora öğrencisi.",r:"ardeb",nx:"Yıl boyu açık.",cont:1,s:1,u:"https://tubitak.gov.tr/tr/destekler/akademik/ulusal-destek-programlari/1002-hizli-destek-modulu"},
+{l:"ard",g:"Temel proje programları",no:"1002-B",n:"Acil Destek Modülü",d:"Doğal ya da insan kaynaklı beklenmedik bir olaydan (jeolojik, iklimsel, biyolojik, toplumsal, teknolojik) hemen sonra veri toplanmasını gerektiren araştırmalar.",t:"En çok 100.000 TL · 6 ay · PTİ yok",w:"Doktoralı tam zamanlı araştırmacı.",r:"ardeb",nx:"Yıl boyu açık.",cont:1,s:1,u:"https://tubitak.gov.tr/tr/destekler/akademik/ulusal-destek-programlari/1002-b-acil-destek-modulu"},
+{l:"ard",g:"Temel proje programları",no:"3501",n:"Kariyer Geliştirme Programı",d:"Doktorasını yeni tamamlamış araştırmacının ilk bağımsız projesi. Daha önce 3501 almamış olmak ve doçent ya da altı unvanda bulunmak gerekir.",t:"En çok 1.500.000 TL (burslar, PTİ, kurum hissesi hariç) · 36 ay",w:"Doktoradan sonraki 7 yıl içinde; 2026 için doktora tarihi 1 Ocak 2019'dan önce olmamalı. Kadın araştırmacılara her doğum için 1 yıl eklenir.",r:"ardeb",nx:"Yıl boyu açık.",cont:1,s:1,u:"https://tubitak.gov.tr/tr/destekler/akademik/ulusal-destek-programlari/3501-kariyer-gelistirme-programi"},
+{l:"ard",g:"Temel proje programları",no:"1005",n:"Ulusal Yeni Fikirler ve Ürünler Araştırma Destek Programı",d:"Yeni ürün, süreç, yöntem ya da model geliştiren uygulamalı araştırma ve deneysel geliştirme projeleri. Program güncelleme için geçici olarak başvuruya kapatıldı.",t:"En çok 1.200.000 TL · 18 ay",w:"Lisans mezunu, kurumunda tam zamanlı yürütücü.",r:"ardeb",nx:"7 Ağustos 2026'dan itibaren kapalı; yeni koşullar ayrıca duyurulacak.",dl:"2026-08-06",u:"https://tubitak.gov.tr/tr/destekler/akademik/ulusal-destek-programlari/1005-ulusal-yeni-fikirler-ve-urunler-arastirma-destek-programi"},
+{l:"ard",g:"Sosyal ve beşerî bilimler",no:"3005-A",n:"Politika Geliştirme Modülü",d:"Kamu kurumu ile akademinin ortak yürüttüğü, politika yapıcılara kanıt ve araç üreten sosyal ve beşerî bilimler araştırmaları. Başvuruda son kullanıcı kamu kurumuyla doldurulmuş işbirliği planlama formu ve ulusal politika belgeleriyle uyum zorunlu. Eylül 2026'da eski 3005'ten ayrıldı.",t:"En çok 1.200.000 TL (burs, PTİ ve kurum hissesi hariç) · 24 ay",w:"Doktoralı tam zamanlı yürütücü ve en az bir kamu kurumu ortağı. Profesörler araştırmacı olamaz.",r:"ardeb",nx:"Yıl boyu açık.",cont:1,s:1,u:"https://tubitak.gov.tr/tr/destekler/akademik/ulusal-destek-programlari/3005-politika-gelistirme-modulu"},
+{l:"ard",g:"Sosyal ve beşerî bilimler",no:"3005-B",n:"Teknolojik İlerlemelerin Toplumsal Etkileri Modülü",d:"İleri teknolojilerin ekonomi, yaşam kalitesi, çevre, sağlık, eğitim, adalet ve güvenlik üzerindeki etkilerini mühendislik disiplinleriyle birlikte inceleyen sosyal ve beşerî bilimler projeleri. Kapsam dışı öneriler bilimsel değerlendirmeye alınmadan iade edilir.",t:"En çok 1.200.000 TL (burslar dahil) · 24 ay",w:"Doktoralı tam zamanlı yürütücü. Yabancı araştırmacı yer alamaz, yurt dışı danışman olabilir.",r:"ardeb",nx:"Yıl boyu açık.",cont:1,s:1,u:"https://tubitak.gov.tr/tr/destekler/akademik/ulusal-destek-programlari/3005-b-teknolojik-ilerlemelerin-toplumsal-etkileri-modulu"},
+{l:"ard",g:"Öncelikli ve çağrılı programlar",no:"1003",n:"Öncelikli Alanlar Ar-Ge Projeleri Destekleme Programı",d:"Ulusal strateji belgelerindeki öncelikli Ar-Ge konularında çağrıya dayalı projeler. Bütçe tavanı her çağrıda ayrıca belirlenir; son çağrı (GETAT) iki aşamalıydı.",t:"Çağrıya göre · 36 ay",w:"Doktoralı tam zamanlı yürütücü; üniversite, kamu ya da özel kuruluş.",r:"ardeb",nx:"Şu anda açık çağrı yok.",u:"https://tubitak.gov.tr/tr/destekler/akademik/ulusal-destek-programlari/1003-oncelikli-alanlar-ar-ge-projeleri-destekleme-programi"},
+{l:"ard",g:"Öncelikli ve çağrılı programlar",no:"1004",n:"Mükemmeliyet Merkezi Destek Programı",d:"Öncelikli alanlarda üniversite altyapıları ve Ar-Ge merkezlerinin uzmanlaşmasını hedefleyen çok projeli araştırma programları. Altı ayda bir ilerleme raporu ve yıllık kritik değerlendirme yapılır.",t:"2024 çağrısında en çok 150 milyon TL · 48 ay",w:"YÖK araştırma üniversiteleri, 6550 sayılı Kanun kapsamındaki altyapılar, TÜBİTAK enstitüleri; ortak kuruluşlarla.",r:"ardeb",nx:"Son çağrı 2024'te kapandı; 1004 Platformları İşbirliği Çağrısı 1001 özel çağrısı olarak açık.",u:"https://tubitak.gov.tr/tr/destekler/akademik/ulusal-destek-programlari/1004-mukemmeliyet-merkezi-destek-programi"},
+{l:"ard",g:"Öncelikli ve çağrılı programlar",no:"1000",n:"Üniversitelerin Ar-Ge Potansiyelinin Artırılmasına Yönelik Destek Programı",d:"Üniversitelerin Ar-Ge kapasitesini güçlendirmeye yönelik, konusu çağrıda belirlenen projeler.",t:"Çağrıya göre · en çok 36 ay",w:"Çağrı metnine göre; üniversiteler.",r:"ardeb",nx:"Çağrıya bağlı.",u:"https://tubitak.gov.tr/tr/destekler/akademik/ulusal-destek-programlari/1000-universitelerin-arastirma-ve-gelistirme-potansiyelinin-artirilmasina-yonelik-destek-programi"},
+{l:"ard",g:"Öncelikli ve çağrılı programlar",no:"Kutup",n:"Kutup Araştırmaları ve Yabancı Araştırma Üssü Katılım Çağrıları",d:"Ulusal Kutup Bilim Programı kapsamında kutup araştırma projeleri ve yabancı kutup üslerine katılım. Lojistik form başvurunun parçası.",t:"Çağrıya göre",w:"Doktoralı tam zamanlı yürütücü.",r:"ardeb",nx:"2027 çağrıları uzatılarak 24 Ağustos 2026'da kapandı.",dl:"2026-08-24",u:"https://tubitak.gov.tr/tr/destekler/akademik/ulusal-destek-programlari/kutup-arastirmalari"},
+{l:"ard",g:"Kamu kurumlarının ihtiyacına göre",no:"1007",n:"Kamu Kurumları Ar-Ge Projelerini Destekleme Programı (KAMAG)",d:"Bir bakanlık ya da kamu kurumunun (müşteri kurum) tanımladığı Ar-Ge ihtiyacını üniversite, kamu Ar-Ge birimi ya da şirket (veya konsorsiyum) çözer. İki aşamalı başvuru. Güncel KAMAG çağrısı: Kamu Yapay Zekâ Ekosistemi 2026.",t:"Çağrıya göre · 48 ay · %10 kurum hissesi",w:"Yürütücü kuruluş: üniversite, kamu Ar-Ge birimi, şirket. Müşteri kurum: bakanlıklar ve bağlı kuruluşlar.",r:"ardeb",nx:"Çağrı bazlı.",s:1,u:"https://tubitak.gov.tr/tr/destekler/akademik/ulusal-destek-programlari/1007-kamu-kurumlari-arastirma-ve-gelistirme-projelerini-destekleme-programi"},
+{l:"ard",g:"Kamu kurumlarının ihtiyacına göre",no:"1007 · SAVTAG",n:"Savunma ve güvenlik çağrıları: balistik kıyafet ve aromatik poliamid",d:"SAVTAG grubunun 16 Ekim 2026'da açtığı iki proje çağrısı: Balistik Kıyafet Geliştirilmesi ve Balistik Amaçlı Aromatik Poliamid Geliştirilmesi.",t:"Çağrıya göre",w:"Üniversite, kamu Ar-Ge birimi, şirket ya da konsorsiyum.",r:"ardeb",nx:"Balistik kıyafet çağrısı 16 Aralık 2026, 17:00.",dl:"2026-12-16",u:"https://tubitak.gov.tr/tr/duyuru/1007-programi-balistik-kiyafet-gelistirilmesi-projesi-cagrisi-acildi"},
+{l:"ard",g:"Kapanmış program",no:"3001",n:"Başlangıç Ar-Ge Projeleri Destekleme Programı",d:"7 Temmuz 2018'de başvuruya kapandı. Doktora sonrası ilk proje için bugün 3501 kullanılıyor.",t:"Kapalı",w:"—",r:"ardeb",nx:"Yeni başvuru alınmıyor.",u:"https://tubitak.gov.tr/tr/destekler/akademik/ulusal-destek-programlari/3001-baslangic-ar-ge-projeleri-destekleme-programi"},
+
+/* ---------- BİDEB araştırmacı ---------- */
+{l:"res",g:"Doktora sonrası",no:"2218",n:"Yurt İçi Doktora Sonrası Araştırma Burs Programı",d:"Türkiye'deki bir üniversite, araştırma altyapısı ya da Ar-Ge merkezinde doktora sonrası araştırma. Doktorayı aldığı kurumda ya da kadrolu olduğu kurumda yapılamaz.",t:"Tam burs 43.500 TL/ay · 6–24 ay",w:"Son 7 yılda doktora almış TC vatandaşı ya da Mavi Kart sahibi; en az 5 puan yayın ölçütü ve YDS 70.",r:"tybs",nx:"2026 çağrısı 17 Ağustos'ta kapandı; sıradaki 2027 yazında.",dl:"2026-08-17",s:1,u:"https://tubitak.gov.tr/tr/burslar/doktora-sonrasi/arastirma-burs-programlari/2218-yurt-ici-doktora-sonrasi-arastirma-burs-programi"},
+{l:"res",g:"Doktora sonrası",no:"2219",n:"Yurt Dışı Doktora Sonrası Araştırma Burs Programı",d:"Doktoralı araştırmacının yurt dışında araştırma yapması. Aynı sayfada 2219 Aziz Sancar Yurt Dışı Doktora Sonrası Araştırma Burs Programı da yer alıyor.",t:"Avrupa 2.350 EUR, İngiltere 2.050 GBP, diğer 2.600 USD/ay · en çok 12 ay",w:"Doktoralı TC vatandaşı araştırmacılar.",r:"tybs",nx:"2026 çağrısı 15 Eylül'de kapandı.",dl:"2026-09-15",s:1,u:"https://tubitak.gov.tr/tr/burslar/doktora-sonrasi/arastirma-burs-programlari/2219-yurt-disi-doktora-sonrasi-arastirma-burs-programi"},
+{l:"res",g:"Doktora sonrası",no:"2236-A",n:"Uluslararası Deneyimli Araştırmacı Dolaşımı (CoCirculation 3)",d:"MSCA COFUND ortak finansmanlı, Avrupa Yeşil Mutabakatı ile uyumlu projelerde Türkiye'ye gelen doktora sonrası araştırmacılar. 2025 çağrısında 51 öneri fonlandı.",t:"Maaş 3.980 EUR + aile 600 EUR + araştırma 1.000 EUR/ay · 24 ay (+12)",w:"Her uyruktan doktoralı; son 36 ayda Türkiye'de 12 aydan fazla bulunmamış olmak.",r:"tybs",nx:"2025 çağrısı tamamlandı; yeni çağrı duyurulmadı.",u:"https://tubitak.gov.tr/tr/burslar/doktora-sonrasi/arastirma-burs-programlari/2236a-uluslararasi-deneyimli-arastirmaci-dolasimi-destek-programi"},
+{l:"res",g:"Kıdemli ve lider araştırmacı",no:"2247-A",n:"Ulusal Lider Araştırmacılar Programı",d:"Türkiye'de çığır açıcı sonuç hedefleyen deneyimli araştırmacılar. Bilimsel mükemmeliyet ana ölçüt; tamamlanmış TÜBİTAK projesi yürütücülüğü aranır.",t:"Araştırma desteği en çok 5 milyon TL + 2–5 bursiyer + PTİ 11.000 TL/ay · 36 ay",w:"Doktoralı, Türkiye'de çalışan araştırmacı. Devlet üniversitelerinde bütçenin tamamı TÜBİTAK'tan.",r:"tybs",nx:"2026 çağrısı 8 Ekim'de açıldı.",dl:"2026-12-15",s:1,u:"https://tubitak.gov.tr/tr/burslar/doktora-sonrasi/arastirma-burs-programlari/2247-ulusal-lider-arastirmacilar-programi"},
+{l:"res",g:"Kıdemli ve lider araştırmacı",no:"2247-D",n:"Ulusal Genç Liderler Programı",d:"Erken kariyer araştırmacının yüksek etkili projesi. 1001, 1003, 1005, 2218, 2232 ya da 2247-B gibi bir projeyi yürütücü olarak tamamlamış olmak ve yayın puanı (SBB'de 15, diğer alanlarda 20) ya da ERC, TÜBİTAK Teşvik, TÜBA-GEBİP gibi bir başarı ölçütü gerekir.",t:"En çok 5 milyon TL + 2–5 bursiyer + PTİ 9.000 TL/ay · 36 ay",w:"Doktoradan sonraki 7 yıl içinde ve 40 yaş altı (kadınlara her doğum için +1 yıl); Türkiye'de çalışıyor olmak.",r:"tybs",nx:"2026 çağrısı 8 Ekim'de açıldı.",dl:"2026-12-15",s:1,u:"https://tubitak.gov.tr/tr/burslar/doktora-sonrasi/arastirma-burs-programlari/2247-d-ulusal-genc-liderler-programi"},
+{l:"res",g:"Kıdemli ve lider araştırmacı",no:"2247-B",n:"ERC Projeleri Güçlendirme Desteği",d:"ERC'de son 3 yılda A ya da B puanı alıp fonlanamayan öneri sahiplerine köprü desteği. Proje bitince ilk uygun ERC çağrısına yeniden başvurmak zorunlu. Başvuru dili İngilizce, yabancılar da başvurabilir.",t:"En çok 3.000.000 TL + bursiyerler · 24 ay",w:"Türkiye'deki bir kurumda çalışan ya da çalışmaya başlayacak ERC başvurusu sahibi.",r:"tybs",nx:"Yıl boyu açık.",cont:1,s:1,u:"https://tubitak.gov.tr/tr/burslar/doktora-sonrasi/arastirma-burs-programlari/2247-b-avrupa-arastirma-konseyi-erc-projeleri-guclendirme-destegi-programi"},
+{l:"res",g:"Yurt dışından araştırmacı kazanımı",no:"2232-A",n:"Uluslararası Lider Araştırmacılar Programı",d:"Yurt dışında en az 3 yıl öğretim üyesi, ekip lideri ya da bağımsız araştırmacı olarak çalışmış araştırmacının Türkiye'de araştırma grubu kurması.",t:"Yürütücü bursu 200.000 TL/ay + başlangıç paketi 4,7 M TL + araştırma 3 M TL · 24–36 ay",w:"Yurt dışında çalışan, son 3 yılda Türkiye'de 1 yıldan fazla bulunmamış doktoralı.",r:"tybs",nx:"2025 çağrısı 27 Eylül 2025'te açılmıştı; 2026 çağrısı henüz duyurulmadı.",s:1,u:"https://tubitak.gov.tr/tr/burslar/doktora-sonrasi/arastirma-burs-programlari/2232-uluslararasi-lider-arastirmacilar-programi"},
+{l:"res",g:"Yurt dışından araştırmacı kazanımı",no:"2232-B",n:"Uluslararası Genç Araştırmacılar Programı",d:"Yurt dışında çalışmış 40 yaş altı araştırmacının araştırmasını Türkiye'de sürdürmesi.",t:"Yürütücü bursu 150.000 TL/ay + başlangıç paketi 2,35 M TL + araştırma 3 M TL · 24–36 ay",w:"40 yaş altı, yurt dışı doktora sonrası ya da özel sektör araştırma deneyimi olan araştırmacı.",r:"tybs",nx:"2026 çağrısı henüz duyurulmadı.",s:1,u:"https://tubitak.gov.tr/tr/burslar/doktora-sonrasi/arastirma-burs-programlari/2232-b-uluslararasi-genc-arastirmacilar-programi"},
+{l:"res",g:"Yurt dışından araştırmacı kazanımı",no:"2221",n:"Konuk veya Akademik İzinli (Sabbatical) Bilim İnsanı Destekleme",d:"Türkiye'deki ev sahibi öğretim üyesinin davet ettiği yabancı bilim insanının kısa ziyareti ya da sabbatical dönemi. Başvuruyu ev sahibi yapar, araştırma gideri karşılanmaz.",t:"Konuk 81.000 TL/ay (7 gün–3 ay), sabbatical 105.000 TL/ay (3–12 ay) + gidiş-dönüş bileti",w:"Doktoradan sonra en az 4 yıl deneyimli bilim insanı; başvuran Türkiye'deki ev sahibi.",r:"tybs",nx:"4. dönem 2 Kasım'da açılır; gelişten önceki dönemde başvurulmalı.",dl:"2026-11-30",s:1,u:"https://tubitak.gov.tr/tr/burslar/doktora-sonrasi/arastirma-burs-programlari/2221-konuk-veya-akademik-izinli-sabbatical-bilim-insani-destekleme-p"},
+{l:"res",g:"Yurt dışından araştırmacı kazanımı",no:"2236-B",n:"MSCA-COFUND Burs Programlarına Katkı Fonu",d:"Türkiye'deki kurumların MSCA COFUND burs programlarına ulusal katkı payı.",t:"Program kurallarına göre",w:"MSCA COFUND yürüten Türk kurumları.",r:"tybs",nx:"Sayfadaki koşullara göre.",u:"https://tubitak.gov.tr/tr/burslar/lisansustu/arastirma-burs-programlari/2236-b-msca-cofund-burs-programlarina-katk%C4%B1-fonu-programi"},
+
+/* ---------- BİDEB burslar ---------- */
+{l:"burs",g:"Lisans",no:"2205",n:"Lisans Burs Programı",d:"Lisans öğrencilerine burs. 2026 yılı 2. dönem çağrısı Ekim'de açıldı.",t:"Aylık burs",w:"Lisans öğrencileri.",r:"tybs",nx:"2026/2 dönemi açık; tarih için çağrı metnine bakın.",u:"https://tubitak.gov.tr/tr/burslar/lisans-onlisans/burs-programlari/2205-lisans-burs-programi"},
+{l:"burs",g:"Lisans",no:"2209-A",n:"Üniversite Öğrencileri Araştırma Projeleri Destekleme Programı",d:"Lisans öğrencisinin danışman eşliğinde yürüttüğü araştırma projesi. Danışman öğretim üyesi için öğrenci araştırmasını başlatmanın en kolay yolu.",t:"Küçük ölçekli proje bütçesi",w:"Önlisans ve lisans öğrencileri, danışman öğretim üyesiyle.",r:"tybs",nx:"Öğrenci başvurusu 11 Kasım, kurum e-imzası 16–23 Kasım 2026.",dl:"2026-11-11",s:1,u:"https://tubitak.gov.tr/tr/burslar/lisans-onlisans/destek-programlari/2209-universite-ogrencileri-arastirma-projeleri-destekleme-programi"},
+{l:"burs",g:"Lisans",no:"2209-B",n:"Üniversite Öğrencileri Sanayiye Yönelik Araştırma Projeleri Desteği",d:"Lisans öğrencisinin bir sanayi kuruluşunun ihtiyacına yönelik bitirme ya da araştırma projesi.",t:"Küçük ölçekli proje bütçesi",w:"Lisans öğrencileri, akademik ve sanayi danışmanıyla.",r:"tybs",nx:"2209-A ile aynı takvim.",dl:"2026-11-11",u:"https://tubitak.gov.tr/tr/burslar/lisans-onlisans/destek-programlari/2209-b-universite-ogrencileri-sanayiye-yonelik-arastirma-projeleri-destegi-programi"},
+{l:"burs",g:"Lisans",no:"2247-C",n:"Stajyer Araştırmacı Burs Programı (STAR)",d:"TÜBİTAK destekli ya da ADEP kapsamındaki projelere lisans öğrencisi ve öğretmenlerin stajyer bursiyer olarak katılması. Önce proje yürütücüsü başvurur, sonra öğrenciler.",t:"Aylık stajyer bursu",w:"Yürütücü: süren TÜBİTAK ya da ADEP projesi olan araştırmacı.",r:"tybs",nx:"2026/2 yürütücü çağrısı 12 Ekim'de kapandı; öğrenci aşaması sürüyor.",dl:"2026-10-12",u:"https://tubitak.gov.tr/tr/burslar/lisans-onlisans/burs-programlari/2247-c-stajyer-arastirmaci-burs-programi-star"},
+{l:"burs",g:"Lisansüstü eğitim",no:"2210",n:"Yurt İçi Yüksek Lisans Burs Programları (A, C, D, E)",d:"2210-A genel, 2210-C öncelikli alanlar, 2210-D sanayiye yönelik, 2210-E doğrudan yüksek lisans bursları.",t:"Aylık burs",w:"Yüksek lisans öğrencileri ve adayları.",r:"tybs",nx:"2026/2 dönemi 5–27 Ekim.",dl:"2026-10-27",s:1,u:"https://tubitak.gov.tr/tr/burslar/lisansustu/egitim-burs-programlari/2210-yurt-ici-yuksek-lisans-burs-programlari"},
+{l:"burs",g:"Lisansüstü eğitim",no:"2211",n:"Yurt İçi Doktora Burs Programları (A, C, E)",d:"2211-A genel, 2211-C öncelikli alanlar, 2211-E doğrudan doktora bursları.",t:"Aylık burs",w:"Doktora öğrencileri ve adayları.",r:"tybs",nx:"2026/2 dönemi 5–27 Ekim.",dl:"2026-10-27",s:1,u:"https://tubitak.gov.tr/tr/burslar/lisansustu/egitim-burs-programlari/2211-yurt-ici-doktora-burs-programlari"},
+{l:"burs",g:"Lisansüstü eğitim",no:"2213-A",n:"Yurt Dışı Doktora Burs Programı",d:"Kuantum, yapay zekâ ve veri bilimi, yarı iletkenler, siber güvenlik gibi listelenen alanlarda yurt dışında doktora. Dönüş yükümlülüğü var.",t:"1.900 USD/ay, yıllık toplam en çok 60.000 USD · 2 yıl",w:"Lisans son sınıf, lisansüstü öğrenci ya da yüksek lisans mezunu.",r:"tybs",nx:"13 Mayıs'tan beri açık.",dl:"2026-12-31",u:"https://tubitak.gov.tr/tr/burslar/lisansustu/egitim-burs-programlari/2213-yurt-disi-doktora-burs-programi"},
+{l:"burs",g:"Lisansüstü eğitim",no:"2213-B",n:"Yurt Dışı Müşterek Doktora Burs Programı",d:"Türkiye'deki doktora programı ile yurt dışındaki bir üniversitenin ortak (çift dereceli) doktorası.",t:"Program kurallarına göre",w:"Müşterek doktora öğrencileri.",r:"tybs",nx:"Çağrıya bağlı.",u:"https://tubitak.gov.tr/tr/burslar/lisansustu/egitim-burs-programlari/2213-b-yurt-disi-musterek-doktora-burs-programi"},
+{l:"burs",g:"Lisansüstü eğitim",no:"2214-A",n:"Yurt Dışı Doktora Sırası Araştırma Burs Programı",d:"Yeterliği geçmiş, tez önerisi kabul edilmiş doktora öğrencisinin tezine yönelik yurt dışı araştırması.",t:"Avrupa 1.700 EUR, İngiltere 1.500 GBP, diğer 1.900 USD/ay · en çok 12 ay",w:"Tez aşamasındaki TC vatandaşı doktora öğrencileri.",r:"tybs",nx:"2026 çağrısı 15 Eylül'de kapandı.",dl:"2026-09-15",s:1,u:"https://tubitak.gov.tr/tr/burslar/lisansustu/arastirma-burs-programlari/2214-yurt-disi-doktora-sirasi-arastirma-burs-programi"},
+{l:"burs",g:"Lisansüstü eğitim",no:"2244",n:"Sanayi Doktora Programı",d:"Üniversite ile Ar-Ge merkezi, teknopark ya da TÜBİTAK proje deneyimi olan şirketin ortak doktora projesi; her protokol ayrı başvuru.",t:"Doktora bursu 35.000 TL/ay + yürütücü PTİ 7.000 TL/ay + istihdam desteği",w:"Üniversite ve sanayi kuruluşu birlikte.",r:"tybs",nx:"2026 tarihleri ilan edilmedi.",u:"https://tubitak.gov.tr/tr/burslar/lisansustu/egitim-burs-programlari/2244-sanayi-doktora-programi"},
+{l:"burs",g:"Lisansüstü eğitim",no:"2250",n:"Lisansüstü Bursları Performans Programı",d:"TÜBİTAK destekli projelerdeki doktora ve doktora sonrası bursiyerlere, yürütücünün verdiği performans puanına göre ek ödeme. Altı ayda bir toplu ödenir.",t:"Doktora 6.250–11.000 TL, doktora sonrası 9.000–13.500 TL/ay",w:"Proje bursiyerleri (performans puanı en az 70).",r:"tybs",nx:"2026/2 dönemi 25 Ağustos'ta kapandı; sıradaki Şubat 2027.",dl:"2026-08-25",u:"https://tubitak.gov.tr/tr/burslar/lisansustu/egitim-burs-programlari/2250-lisansustu-burslari-performans-programi"},
+{l:"burs",g:"Lisansüstü eğitim",no:"BİÇABA",n:"Birlikte Çalışıp Birlikte Başaracağız Burs Programı",d:"Lisanstan doktora sonrasına kadar farklı düzeylerde listelenen ortak burs programı.",t:"Program kurallarına göre",w:"Çağrı metnine göre.",r:"tybs",nx:"Çağrıya bağlı.",u:"https://tubitak.gov.tr/tr/burslar/lisansustu/arastirma-burs-programlari/bicaba-birlikte-calisip-birlikte-basaracagiz-burs-programi"},
+{l:"burs",g:"Öğrenci yarışmaları",no:"2204",n:"Lise ve Ortaokul Öğrencileri Araştırma Projeleri Yarışmaları",d:"2204-A lise, 2204-B ortaokul; ayrıca 2204-C kutup ve 2204-D iklim değişikliği yarışmaları. Öğretim üyeleri danışman ya da jüri olarak yer alır.",t:"Ödül ve derece",w:"Öğrenciler ve danışman öğretmenler.",r:"tybs",nx:"2027 çağrıları Eylül 2026'da yayınlandı.",u:"https://tubitak.gov.tr/tr/duyuru/2204-lise-ogrencileri-arastirma-projeleri-yarismasi-ve-2204-b-ortaokul-ogrencileri-arastirma-projeleri-yarismasi-2027-yili-cagrilari-yayinlandi"},
+{l:"burs",g:"Öğrenci yarışmaları",no:"2242",n:"Üniversite Öğrencileri Araştırma Proje Yarışmaları",d:"Lisans öğrencilerinin araştırma projelerinin bölge ve final aşamalı yarışması.",t:"Ödül ve derece",w:"Önlisans ve lisans öğrencileri.",r:"tybs",nx:"2026 finali Ağustos'ta tamamlandı.",s:1},
+
+/* ---------- Etkinlik ---------- */
+{l:"etk",g:"Etkinlik düzenleme",no:"2223-B",n:"Yurt İçi Bilimsel Etkinlik Düzenleme Desteği",d:"Türkiye'de düzenlenen kongre, konferans, sempozyum ve çalıştaylar. Hakemli, en az 100 katılımcılı, en az üçüncü kez düzenlenen ve aralar dört yılı geçmeyen etkinlikler.",t:"En çok 150.000 TL; yabancı konuşmacı bileti 1.500 USD'ye kadar",w:"Düzenleme kurulundaki doktoralı yürütücü; kurul en az üç kurumdan.",r:"tybs",nx:"2026/3 dönemi 5–27 Ekim. Etkinlik kapanıştan 60–270 gün sonra başlamalı.",dl:"2026-10-27",s:1,u:"https://tubitak.gov.tr/tr/destekler/bilimsel-etkinlik/etkinlik-duzenleme-destekleri/2223-b-yurt-ici-bilimsel-etkinlik-duzenleme-destegi"},
+{l:"etk",g:"Etkinlik düzenleme",no:"2223-C",n:"Çok Katılımlı Uluslararası Etkinlik Düzenleme Desteği",d:"Türkiye'de düzenlenen büyük ölçekli uluslararası bilimsel etkinlikler.",t:"Çağrıya göre",w:"Doktoralı düzenleyici.",r:"tybs",nx:"2026/3 dönemi 5–27 Ekim.",dl:"2026-10-27",s:1,u:"https://tubitak.gov.tr/tr/destekler/bilimsel-etkinlik/etkinlik-duzenleme-destekleri/2223-c-cok-katilimli-uluslararasi-etkinlik-duzenleme-destegi"},
+{l:"etk",g:"Etkinlik düzenleme",no:"2223-D",n:"İkili İşbirliği Anlaşmaları Çerçevesinde Etkinlik Düzenleme",d:"İkili bilimsel işbirliği anlaşması olan ülkelerden araştırmacıları Türkiye'de bir araya getiren etkinlikler (son dönem: Almanya, Arnavutluk, Brezilya, Bulgaristan, Çin, İngiltere, İtalya, Libya, Romanya).",t:"En çok 195.000 TL",w:"Doktoralı düzenleyici; en az 30 katılımcı.",r:"tybs",nx:"Dönemsel; uygun ülke listesi her dönem değişir.",s:1,u:"https://tubitak.gov.tr/tr/destekler/bilimsel-etkinlik/etkinlik-duzenleme-destekleri/2223-d-ikili-isbirligi-anlasmalari-cercevesinde-etkinlik-duzenleme-destegi"},
+{l:"etk",g:"Etkinlik düzenleme",no:"2237-A",n:"Bilimsel Eğitim Etkinlikleri Desteği",d:"Yüz yüze ya da çevrim içi bilimsel eğitim etkinlikleri (yaz okulu, kurs, atölye).",t:"Etkinlik başına en çok 250.000 TL",w:"Doktoralı yürütücü.",r:"tybs",nx:"2026/2 dönemi 11 Ağustos'ta kapandı; sıradaki Ocak 2027.",dl:"2026-08-11",s:1,u:"https://tubitak.gov.tr/tr/destekler/bilimsel-etkinlik/etkinlik-duzenleme-destekleri/2237-bilimsel-egitim-etkinlikleri-destegi"},
+{l:"etk",g:"Etkinlik düzenleme",no:"2237-B",n:"Proje Eğitimi Etkinliklerini Destekleme Programı",d:"Proje yazma ve proje yönetimi eğitimleri; kurum proje ofislerinin sık kullandığı bir araç.",t:"Çağrıya göre",w:"Üniversiteler ve araştırma kurumları.",r:"tybs",nx:"Dönemsel.",s:1,u:"https://tubitak.gov.tr/tr/destekler/bilimsel-etkinlik/etkinlik-duzenleme-destekleri/2237-b-proje-egitimi-etkinliklerini-destekleme-programi"},
+{l:"etk",g:"Etkinliklere katılım",no:"2224-A",n:"Yurt Dışı Bilimsel Etkinliklere Katılımı Destekleme",d:"WoS CPCI ya da Scopus dizinli yurt dışı etkinlikte sözlü veya poster bildiri (çevrim içi dahil). Yol, konaklama ve kayıt ücreti ülkeye göre tavana kadar.",t:"Ülkeye göre üst limit",w:"Türkiye'de çalışan ya da okuyan; puan şartı (doktoralı 6 puan) ve dil şartı. Yılda bir kez.",r:"tybs",nx:"2026/3 dönemi 27 Ekim'de kapanıyor; 27 Ekim sonrası başlayan etkinlikler.",dl:"2026-10-27",s:1,u:"https://tubitak.gov.tr/tr/destekler/bilimsel-etkinlik/etkinliklere-katilma-destekleri/2224-yurt-disi-bilimsel-etkinliklere-katilimi-destekleme-programi"},
+{l:"etk",g:"Etkinliklere katılım",no:"2224-B",n:"Yurt İçi Bilimsel Etkinliklere Katılımı Destekleme",d:"Türkiye'deki bilimsel etkinliklerde bildiri sunumu.",t:"Üst limitli",w:"Türkiye'de çalışan ya da okuyan araştırmacılar.",r:"tybs",nx:"2026/3 dönemi 27 Ekim'de kapanıyor.",dl:"2026-10-27",s:1,u:"https://tubitak.gov.tr/tr/destekler/bilimsel-etkinlik/etkinliklere-katilma-destekleri/2224-b-yurt-ici-bilimsel-etkinliklere-katilimi-destekleme-programi"},
+{l:"etk",g:"Etkinliklere katılım",no:"2224-C",n:"Uluslararası Anlaşmalar Çerçevesinde Yurt Dışı Etkinliklere Katılım",d:"TÜBİTAK'ın taraf olduğu uluslararası anlaşmalar kapsamındaki yurt dışı etkinliklere katılım.",t:"Çağrıya göre",w:"Çağrıdaki ülke ve etkinlik listesine göre.",r:"tybs",nx:"2026/1 dönemi Eylül 2026'da açıldı.",s:1,u:"https://tubitak.gov.tr/tr/destekler/bilimsel-etkinlik/etkinliklere-katilma-destekleri/2224-c-uluslararasi-anlasmalar-cercevesinde-yurt-disindaki-bilimsel-etkinliklere-katilimi-destekleme-programi"},
+{l:"etk",g:"Etkinliklere katılım",no:"2224-D",n:"Yurt Dışındaki Bilimsel Eğitim Etkinliklerine Katılım",d:"Yurt dışındaki yaz okulu, kurs ve eğitim etkinliklerine katılım.",t:"Çağrıya göre",w:"Lisansüstü öğrenciler ve araştırmacılar.",r:"tybs",nx:"Dönemsel.",s:1,u:"https://tubitak.gov.tr/tr/destekler/bilimsel-etkinlik/etkinliklere-katilma-destekleri/2224-d-yurt-disindaki-bilimsel-egitim-etkinliklerine-katilimi-destekleme-programi"},
+
+/* ---------- UİDB ---------- */
+{l:"uid",g:"Çatı program",no:"1071",n:"Uluslararası İşbirliği Projeleri Destek Programı",d:"Bütün ikili ve çok taraflı ortak çağrılarda Türk ekibin ulusal fon kanalı. Araştırma projeleri ve Ar-Ge-inovasyon projeleri olarak iki tür. Süre, bütçe tavanı ve uygun giderler her çağrıda ayrı.",t:"Çağrıya göre",w:"Akademi, akademi-sanayi ve sanayi; çağrıya göre.",r:"uidb",nx:"Ortak çağrılarla birlikte açılır.",cont:1,s:1,u:"https://tubitak.gov.tr/tr/destekler/akademik/uluslararasi-destek-programlari/1071-uluslararasi-isbirligi-projeleri-destek-programi"},
+{l:"uid",g:"Ufuk Avrupa ortaklıkları · 2026 ortak çağrıları",no:"1071 · DUT",n:"Driving Urban Transitions (DUT) 2026 Çağrısı",d:"Kentsel sorunlar ve sürdürülebilir kent dönüşümü; stratejik kent araştırmasından uygulamaya disiplinlerarası projeler. Uluslararası 1. aşama 17 Kasım, 2. aşama 15 Nisan 2027.",t:"1071 kurallarına göre",w:"Çok ülkeli konsorsiyumun Türk ortakları.",r:"uidb",nx:"Ulusal 1. aşama 20 Kasım, e-imza 24 Kasım 2026.",dl:"2026-11-20",s:1,u:"https://tubitak.gov.tr/tr/duyuru/ufuk-avrupa-programi-kentsel-gecisleri-surdurulebilir-bir-gelecege-yonlendirme-ortakligi-dut-2026-cagrisi-acildi"},
+{l:"uid",g:"Ufuk Avrupa ortaklıkları · 2026 ortak çağrıları",no:"1071 · Biodiversa+",n:"BiodivFuture: Yeni ekosistemler ve sosyo-ekolojik sonuçlar",d:"Yeni ekosistemler, biyoçeşitlilik, sosyo-ekolojik sonuçlar ve gelecekteki seyirler. Uluslararası ön öneri 10 Kasım.",t:"1071 kurallarına göre",w:"Çok ülkeli konsorsiyumun Türk ortakları.",r:"uidb",nx:"Ulusal 1. aşama 16 Kasım, e-imza 19 Kasım 2026.",dl:"2026-11-16",s:1,u:"https://tubitak.gov.tr/tr/duyuru/biodiversa-2026-yili-yeni-ekosistemler-biyocesitlilik-sosyo-ekolojik-sonuclar-ve-gelecekteki-seyirler-biodivfuture-baslikli-cagrisi-acildi"},
+{l:"uid",g:"Ufuk Avrupa ortaklıkları · 2026 ortak çağrıları",no:"1071 · Water4All",n:"Water4All 2026: Sürdürülebilir su yönetimi",d:"Dört alt konu: entegre izleme, doğa temelli yaklaşımlar, akıllı su altyapıları ve sistemik değişim, politika uyumu ve kapsayıcı yönetişim. Uluslararası 1. aşama 10 Kasım.",t:"1071 kurallarına göre",w:"Çok ülkeli konsorsiyumun Türk ortakları.",r:"uidb",nx:"Ulusal 1. aşama 16 Kasım, e-imza 19 Kasım 2026.",dl:"2026-11-16",s:1,u:"https://tubitak.gov.tr/tr/duyuru/ufuk-avrupa-programi-gezegen-icin-su-guvenligi-ortakligi-water4all-2026-cok-uluslu-ortak-cagrisi-basvuruya-acildi"},
+{l:"uid",g:"Ufuk Avrupa ortaklıkları · 2026 ortak çağrıları",no:"1071 · SBEP",n:"Sürdürülebilir Mavi Ekonomi Ortaklığı 2026",d:"Deniz ekonomisini yenilenebilir ve döngüsel bir mavi ekonomiye adil biçimde dönüştüren projeler. En az üç ülkeden, en az üç fon kuruluşundan ortak. Uluslararası ön öneri 16 Kasım.",t:"1071 kurallarına göre",w:"Çok ülkeli konsorsiyumun Türk ortakları.",r:"uidb",nx:"Ulusal ön öneri 23 Kasım, e-imza 26 Kasım 2026.",dl:"2026-11-23",s:1,u:"https://tubitak.gov.tr/tr/duyuru/ufuk-avrupa-programi-surdurulebilir-mavi-ekonomi-ortakligi-sbep-2026-yili-cok-uluslu-ortak-cagrisi-basvuruya-acildi"},
+{l:"uid",g:"Ufuk Avrupa ortaklıkları · 2026 ortak çağrıları",no:"1071 · FOREST",n:"FOREST Ortaklığı 2026",d:"İklime dayanıklı orman sistemleri, uyarlanabilir orman yönetimi, ahşap ürünler ve orman değer zinciri, pazarlama ve yönetişim. Uluslararası 1. aşama 2 Aralık.",t:"1071 kurallarına göre",w:"Çok ülkeli konsorsiyumun Türk ortakları.",r:"uidb",nx:"Ulusal 1. aşama 8 Aralık, e-imza 11 Aralık 2026.",dl:"2026-12-08",s:1,u:"https://tubitak.gov.tr/tr/duyuru/ufuk-avrupa-programi-forest-ortakligi-2026-ortak-cagrisi-basvurulara-acildi"},
+{l:"uid",g:"Ufuk Avrupa ortaklıkları · 2026 ortak çağrıları",no:"1071 · PRIMA",n:"PRIMA Akdeniz Ortaklığı",d:"Su, tarım sistemleri ve tarım-gıda değer zinciri. Bölüm 2 ulusal fonlu; Türk ortaklar TÜBİTAK'a 1071 başvurusu yapar. Vakıf, dernek ve kooperatifler TÜBİTAK desteğine uygun değil.",t:"1071 kurallarına göre",w:"Konsorsiyumun Türk ortakları.",r:"uidb",nx:"2026 çağrıları kapandı; 2027 son çağrı yılı.",u:"https://tubitak.gov.tr/tr/prima-akdeniz-bolgesinde-arastirma-ve-inovasyon-icin-ortaklik"},
+{l:"uid",g:"İkili işbirliği (25xx)",no:"2531",n:"TÜBİTAK–DAAD (Almanya) Seyahat Destek Programı, 7. çağrı",d:"Türk ve Alman araştırmacıların ortak projesi için karşılıklı seyahat; TÜBİTAK bursiyer ve tanıtım giderlerini de karşılayabilir. Tek taraflı başvuru kabul edilmez.",t:"Seyahat ve bursiyer desteği",w:"Alman ortağı olan Türk araştırmacı.",r:"uidb",nx:"Son başvuru 1 Şubat, e-imza 8 Şubat 2027.",dl:"2027-02-01",s:1,u:"https://tubitak.gov.tr/tr/duyuru/2531-tubitak-daad-almanya-ikili-birligi-seyahat-destek-programi-7-cagrisi-acildi"},
+{l:"uid",g:"İkili işbirliği (25xx)",no:"2572",n:"TÜBİTAK–Ürdün NCRD İkili İşbirliği",d:"Gıda güvenliği, su kıtlığı ve biyoçeşitlilik, ekosistem restorasyonu ve iklim direnci konularında ortak projeler.",t:"1071 kurallarına göre",w:"Ürdünlü ortağı olan Türk araştırmacı.",r:"uidb",nx:"Son başvuru 31 Aralık 2026, e-imza 8 Ocak 2027.",dl:"2026-12-31",s:1,u:"https://tubitak.gov.tr/tr/duyuru/2572-tubitak-urdun-ulusal-arastirma-gelistirme-merkezi-ncrd-ikili-isbirligi-cagrisi-basvuruya-acildi"},
+{l:"uid",g:"İkili işbirliği (25xx)",no:"2518",n:"TÜBİTAK–Özbekistan (MHESI) İkili İşbirliği",d:"BİT, gıda ve tarım, sağlık, ileri malzemeler ve fizik alanlarında ortak projeler.",t:"1071 kurallarına göre",w:"Özbek ortağı olan Türk araştırmacı.",r:"uidb",nx:"Son başvuru 14 Aralık, e-imza 28 Aralık 2026.",dl:"2026-12-14",u:"https://tubitak.gov.tr/tr/duyuru/2518-tubitak-ozbekistan-cumhuriyeti-yuksekogretim-bilim-ve-yenilikler-bakanligi-mhesi-uzbekistan-ikili-birligi-cagrisi-basvuruya-acildi-0"},
+{l:"uid",g:"İkili işbirliği (25xx)",no:"25xx",n:"Diğer ikili işbirliği çağrıları",d:"Hükümetler ya da kurumlar arası anlaşmalarla açılan ortak araştırma, seyahat ve 2+2 çağrıları. 2026'da sonuçlananlar arasında Endonezya BRIN (2573) ve Arnavutluk NASRI (2547) var. Açık çağrılar UİDB-PBS'de listelenir.",t:"Çağrıya göre",w:"Ortak ülkeden partneri olan araştırmacı.",r:"uidb",nx:"Ülkeye göre, yıl boyu farklı tarihler.",s:1,u:"https://uidb-pbs.tubitak.gov.tr/"},
+{l:"uid",g:"Çok taraflı programlar",no:"COST · 2515",n:"COST ve COST Aksiyon Üyeleri Ar-Ge Destek Programı",d:"COST aksiyonlarında Yönetim Komitesi atamaları TÜBİTAK üzerinden yapılır; kısa süreli bilimsel ziyaret (STSM, 4.000 EUR'ya kadar) ve konferans hibeleri COST e-services'ten. 2515, aksiyon konusuyla uyumlu ulusal Ar-Ge projesini 1001 kurallarıyla fonlar.",t:"2515: 1001 kuralları",w:"2515: bir aksiyonun MC ya da WG üyesi olan araştırmacı.",r:"ardeb",nx:"2515 yıl boyu açık; yeni aksiyon önerisi yılda iki kez.",cont:1,s:1,u:"https://tubitak.gov.tr/tr/destekler/uluslararasi-birlikleri/coklu-birligi-programlari/cost-bilim-ve-teknolojide-avrupa-isbirligi"},
+{l:"uid",g:"Çok taraflı programlar",no:"Belmont",n:"Belmont Forum",d:"Küresel çevre değişimi üzerine çok ülkeli, disiplinlerarası ortak araştırma eylemleri; sosyal bilimler çoğu çağrıda zorunlu bileşen.",t:"1071 kurallarına göre",w:"Konsorsiyumun Türk ortakları.",r:"uidb",nx:"Çağrıya bağlı.",s:1,u:"https://tubitak.gov.tr/tr/destekler/belmont-forum"},
+{l:"uid",g:"Çok taraflı programlar",no:"NATO SPS",n:"NATO Barış ve Güvenlik için Bilim",d:"Güvenlikle ilgili sivil araştırma projeleri, ileri araştırma çalıştayları ve eğitim kursları.",t:"NATO kuralları",w:"NATO ve ortak ülke araştırmacıları.",r:"ext",nx:"NATO SPS takvimi.",s:1,u:"https://tubitak.gov.tr/tr/nato-sps-baris-ve-guvenlik-icin-bilim"},
+{l:"uid",g:"Çok taraflı programlar",no:"SEA-EU JFS",n:"Güneydoğu Asya–Avrupa Ortak Fonlama Programı",d:"Güneydoğu Asya ve Avrupa ülkelerinin ortak çağrıları.",t:"1071 kurallarına göre",w:"Konsorsiyumun Türk ortakları.",r:"uidb",nx:"Çağrıya bağlı.",u:"https://tubitak.gov.tr/tr/sea-eu-jfs-guneydogu-asya-ve-avrupa-ulkeleri-ortak-fonlama-programi-southeast-asia-europe-joint-funding-scheme-research-and-innovation"},
+{l:"uid",g:"Çok taraflı programlar",no:"Diğer",n:"Bölgesel ve küresel platformlar",d:"Akdeniz için Birlik (AİB), ANSO, COMSATS, D-8, ECO, KEİ, OIC, EMB, GRC, OECD GSF, EU-LAC. Çoğu ağ ve politika platformu; zaman zaman ortak çağrı ya da etkinlik açarlar.",t:"Platforma göre",w:"Platforma göre.",r:"uidb",nx:"Platforma göre.",u:"https://tubitak.gov.tr/tr/destekler/uluslararasi-is-birlikleri/coklu-is-birligi-programlari"},
+{l:"uid",g:"Ufuk Avrupa ulusal teşvikleri",no:"UA",n:"Koordinatörlük, seyahat, ERC ve MSCA destekleri",d:"Ufuk Avrupa Koordinatörlüğü Destekleme Programı, Seyahat Desteği (bilgi günleri ve proje pazarları), Ağlara Üyelik Desteği, Yabancı Araştırmacı Seyahat Desteği, ERC Baş Araştırmacı Geliştirme Programı ve MSCA Proje Ön Değerlendirme Desteği.",t:"Programa göre",w:"Ufuk Avrupa'ya başvuran ya da hazırlanan araştırmacılar.",r:"ext",nx:"ufukavrupa.org.tr duyurularına göre.",s:1,u:"https://ufukavrupa.org.tr/"},
+
+/* ---------- TEYDEB sanayi ---------- */
+{l:"tey",g:"Proje destekleri",no:"1501",n:"Sanayi Ar-Ge Projeleri Destekleme Programı",d:"KOBİ ölçekli sermaye şirketlerinin Ar-Ge projeleri. Bütçe bazlı, yılda iki çağrı.",t:"Hibe %75 (ilk 5 proje), sonra %60 · proje başına en çok 20 M TL · 36 ay",w:"Türkiye'de yerleşik KOBİ ölçekli sermaye şirketleri.",r:"prodis",nx:"2026 2. çağrısı Temmuz–Ağustos'ta yapıldı; sıradaki Ocak–Şubat 2027.",u:"https://tubitak.gov.tr/tr/destekler/sanayi/ulusal-destek-programlari/1501-tubitak-sanayi-ar-ge-projeleri-destekleme-programi"},
+{l:"tey",g:"Proje destekleri",no:"1505",n:"Üniversite-Sanayi İşbirliği Destek Programı",d:"Şirketin (müşteri kuruluş) ihtiyacına yönelik projeyi üniversite ya da araştırma kurumu (yürütücü kuruluş) yürütür. Şirket sonuçları Türkiye'de uygulamayı taahhüt eder; masraf TÜBİTAK ile şirket arasında paylaşılır.",t:"Üst limitler program tablosunda",w:"Yürütücü: üniversite, araştırma hastanesi, kamu Ar-Ge birimi. Müşteri: KOBİ ya da büyük şirket.",r:"prodis",nx:"Yıl boyu açık.",cont:1,u:"https://tubitak.gov.tr/tr/destekler/sanayi/ulusal-destek-programlari/1505-universite-sanayi-isbirligi-destek-programi"},
+{l:"tey",g:"Proje destekleri",no:"1507",n:"KOBİ Ar-Ge Başlangıç Destek Programı",d:"Ar-Ge'ye yeni başlayan KOBİ'lerin ilk projeleri. Yılda iki çağrı.",t:"Hibe %75 · toplam bütçe en çok 3,5 M TL · 18 ay",w:"KOBİ ölçekli sermaye şirketleri.",r:"prodis",nx:"2026 2. çağrısı Temmuz–Ağustos'ta yapıldı.",u:"https://tubitak.gov.tr/tr/destekler/sanayi/ulusal-destek-programlari/1507-tubitak-kobi-ar-ge-baslangic-destek-programi"},
+{l:"tey",g:"Proje destekleri",no:"1511",n:"Öncelikli Alanlar Programı (Teknoloji Odaklı Sanayi Hamlesi)",d:"Sanayi ve Teknoloji Bakanlığı, TÜBİTAK ve KOSGEB desteklerini tek pencerede birleştiren program. Bakanlık hamle.gov.tr'de öncelikli ürün listeleriyle çağrı açar; iki aşamalı başvuru.",t:"KOBİ %75 (20 M TL'ye kadar), büyük işletme %50–60",w:"Türkiye'de yerleşik sermaye şirketleri.",r:"prodis",nx:"Çağrılar hamle.gov.tr'de.",u:"https://tubitak.gov.tr/tr/destekler/sanayi/ulusal-destek-programlari/1511-tubitak-oncelikli-alanlar-arastirma-teknoloji-gelistirme-ve-yenilik-p-d-pteknoloji-odakli-sanayi-hamlesi-programi"},
+{l:"tey",g:"Proje destekleri",no:"1515",n:"Öncül Ar-Ge Laboratuvarları Destekleme Programı",d:"Büyük şirketlerin Türkiye'de temel ya da uygulamalı araştırma yapan öncül laboratuvar kurması; 27 öncelikli teknoloji alanı.",t:"Yıllık en çok 25 M TL · 5 yıl (+5)",w:"Son üç yılın birinde en az 15 M TL Ar-Ge harcaması olan ana kuruluş ya da bağlı şirketi.",r:"prodis",nx:"Yıl boyu açık; niyet mektubuyla başlar.",cont:1,u:"https://tubitak.gov.tr/tr/destekler/sanayi/ulusal-destek-programlari/1515-oncul-ar-ge-laboratuvarlari-destekleme-programi"},
+{l:"tey",g:"Çağrılar",no:"1707",n:"Siparişe Dayalı Ar-Ge Projeleri için KOBİ Destekleme Çağrısı",d:"Müşteri kuruluşun siparişi üzerine KOBİ tedarikçinin yürüttüğü Ar-Ge. Müşteri dönemsel giderlerin en az %40'ını öder, TÜBİTAK tedarikçiye %40 hibe verir.",t:"Proje bütçesi en çok 10 M TL · 24 ay",w:"Müşteri: KOBİ ya da büyük şirket. Tedarikçi: KOBİ ölçekli sermaye şirketi.",r:"prodis",nx:"2026 3. çağrısı 1 Eylül'de açıldı.",dl:"2026-11-13",u:"https://tubitak.gov.tr/tr/destekler/sanayi/ulusal-destek-programlari/1707-siparise-dayali-ar-ge-projeleri-icin-kobi-destekleme-cagrisi"},
+{l:"tey",g:"Çağrılar",no:"1711",n:"Yapay Zekâ Ekosistem Çağrısı",d:"Yapay zekâ çözümüne ihtiyaç duyan şirketler, teknoloji sağlayıcı, üniversite laboratuvarı ve TÜBİTAK Yapay Zekâ Enstitüsü'nden oluşan konsorsiyum projeleri.",t:"Çağrı metnine göre",w:"Kullanıcı şirket + teknoloji sağlayıcı + üniversite ya da kamu araştırma merkezi.",r:"prodis",nx:"2026 çağrısı uzatılarak 2 Ekim'de kapandı.",dl:"2026-10-02",u:"https://tubitak.gov.tr/tr/destekler/sanayi/ulusal-destek-programlari/1711-yapay-zeka-ekosistem-cagrisi"},
+{l:"tey",g:"Yeşil dönüşüm (Dünya Bankası destekli)",no:"1832",n:"Sanayide Yeşil Dönüşüm Çağrısı",d:"İklim, döngüsel ekonomi, temiz enerji, sürdürülebilir tarım ve ulaşım alanlarında THS 3–9 arası ürün ve süreç geliştirme; ölçek büyütme zorunlu.",t:"Faizsiz geri ödemeli; KOBİ %80, deprem bölgesi KOBİ %90, büyük %70",w:"KOBİ ve büyük ölçekli şirketler.",r:"prodis",nx:"2026-2 çağrısı 12 Ekim'de kapandı.",dl:"2026-10-12",u:"https://tubitak.gov.tr/tr/destekler/sanayi/ulusal-destek-programlari/1832-sanayide-yesil-donusum-cagrisi"},
+{l:"tey",g:"Yeşil dönüşüm (Dünya Bankası destekli)",no:"1833",n:"SAYEM Yeşil Dönüşüm Çağrısı",d:"Kamu-özel-üniversite platformlarının yeşil büyüme için ürün geliştirme yol haritaları ve programları. Üniversite ve araştırma kurumları toplam bütçenin %25'ine kadar alabilir.",t:"KOBİ lider 28 M TL, büyük lider 70 M TL",w:"Lider büyük ya da orta ölçekli şirket; en az üç ortak.",r:"prodis",nx:"2026 başvuruları 4 Haziran'da kapandı.",dl:"2026-06-04",u:"https://tubitak.gov.tr/tr/destekler/sanayi/ulusal-destek-programlari/1833-sayem-yesil-donusum-cagrisi"},
+{l:"tey",g:"Yeşil dönüşüm (Dünya Bankası destekli)",no:"1831",n:"Yeşil İnovasyon Teknoloji Mentörlük Çağrısı",d:"KOBİ'lerin yeşil dönüşüm düzenlemelerine uyumu için çözüm ortağından teknoloji danışmanlığı, durum analizi ve yol haritası.",t:"Hizmet bedelinin %90'ı hibe · en çok 310.000 TL · 3–6 ay",w:"Sermaye şirketi niteliğindeki KOBİ'ler.",r:"prodis",nx:"Çağrı metnine göre.",u:"https://tubitak.gov.tr/tr/destekler/sanayi/ulusal-destek-programlari/1831-yesil-inovasyon-teknoloji-mentorluk-cagrisi"},
+{l:"tey",g:"Diğer",no:"1503",n:"Proje Pazarları Destekleme Programı",d:"Proje sahiplerini yatırımcı ve sanayiyle buluşturan proje pazarı etkinliklerinin düzenlenmesi.",t:"Etkinlik giderleri",w:"Proje pazarı düzenleyen kuruluşlar.",r:"prodis",nx:"Program kurallarına göre.",u:"https://tubitak.gov.tr/tr/destekler/sanayi/ulusal-destek-programlari/1503-proje-pazarlari-destekleme-programi"},
+{l:"tey",g:"Diğer",no:"1701",n:"Ar-Ge Proje Değerlendirme ve İzleme Çağrısı",d:"TEYDEB projelerinin değerlendirme ve izleme süreçlerinde görev alacak kuruluşlara yönelik çağrı.",t:"Hizmet bedeli",w:"Çağrı metnine göre.",r:"prodis",nx:"Çağrıya bağlı.",u:"https://tubitak.gov.tr/tr/destekler/sanayi/ulusal-destek-programlari/1701-ar-ge-proje-degerlendirme-ve-izleme-cagrisi"},
+
+/* ---------- Girişim, TT ---------- */
+{l:"gir",g:"Girişimcilik",no:"1612 · BiGG",n:"Bireysel Genç Girişim: 1. aşama uygulayıcı kuruluş çağrısı",d:"Üniversite, teknopark ve TTO gibi uygulayıcı kuruluşların teknoloji girişimcilerine hızlandırma programı yürütmesi. Hızlandırmayı bitiren girişimci 1812 yatırım aşamasına geçer.",t:"Uygulayıcı kuruluşa program desteği",w:"Uygulayıcı kuruluşlar; girişimciler onlar üzerinden.",r:"prodis",nx:"Çağrıya bağlı.",u:"https://tubitak.gov.tr/tr/destekler/sanayi/ulusal-destek-programlari/1612-bigg-1asama-uygulayici-kurulus-cagrisi"},
+{l:"gir",g:"Girişimcilik",no:"1812",n:"Yatırım Tabanlı Girişimcilik Destek Programı (BiGG Yatırım)",d:"Hızlandırmayı tamamlayan girişimlere TÜBİTAK BiGG Fonu'ndan hisse karşılığı yatırım. Mükemmeliyet Mührü alan iş planları yatırım alır; ortak yatırımcı beyan edene hızlı değerlendirme.",t:"1.350.000 TL karşılığı %3 hisse (+1,35 M TL takip yatırımı)",w:"1. aşamayı bir uygulayıcı kuruluşla bitiren girişimciler.",r:"prodis",nx:"2026-2 çağrısı 30 Eylül'de kapandı; destek 1 Ocak 2027'de başlıyor.",dl:"2026-09-30",u:"https://tubitak.gov.tr/tr/destekler/sanayi/ulusal-destek-programlari/1812-yatirim-tabanli-girisimcilik-destek-programi-bigg-yatirim"},
+{l:"gir",g:"Girişimcilik",no:"1601",n:"Yenilik ve Girişimcilik Alanlarında Kapasite Artırılması",d:"Yenilik ve girişimcilik ekosistemini güçlendiren eğitim, hızlandırma ve yarışma programlarını yürüten kuruluşlara destek.",t:"Çağrıya göre",w:"Üniversiteler, TTO'lar, teknoparklar ve benzeri kuruluşlar.",r:"prodis",nx:"Çağrıya bağlı.",u:"https://tubitak.gov.tr/tr/destekler/sanayi/ulusal-destek-programlari/1601-yenilik-girisimcilik-alanlarinda-kapasite-artirilmasina-yonelik-dp"},
+{l:"gir",g:"Teknoloji transferi",no:"1513",n:"Teknoloji Transfer Ofisleri Destekleme Programı",d:"Üniversite TTO'larının kuruluş ve faaliyet giderleri.",t:"Program kurallarına göre",w:"Teknoloji transfer ofisleri.",r:"prodis",nx:"Çağrıya bağlı.",u:"https://tubitak.gov.tr/tr/destekler/sanayi/ulusal-destek-programlari/1513-teknoloji-transfer-ofisleri-destekleme-programi"},
+{l:"gir",g:"Teknoloji transferi",no:"1514",n:"Girişim Sermayesi Destekleme Programı (Tech-InvesTR)",d:"TTO, teknopark ve araştırma altyapılarının girişim sermayesi fonlarına katkısının yarısına hibe. Fonlar en çok 10 yaşındaki, kamu Ar-Ge desteği almış teknoloji girişimlerine yatırır.",t:"Katkının %50'si + %10 genel gider · kurum başına en çok 20 M TL",w:"TTO, teknopark ve yetkinlik kararlı araştırma altyapıları.",r:"prodis",nx:"Yeni çağrı duyurusuna bağlı.",u:"https://tubitak.gov.tr/tr/destekler/sanayi/ulusal-destek-programlari/1514-girisim-sermayesi-destekleme-programi-tech-investr"},
+{l:"gir",g:"Teknoloji transferi",no:"1613",n:"Teknoloji Transferi Profesyoneli Çağrısı",d:"Teknoloji transferi alanında uzman istihdamı ve yetkinlik geliştirme.",t:"Çağrıya göre",w:"Çağrı metnine göre.",r:"prodis",nx:"Çağrıya bağlı.",u:"https://tubitak.gov.tr/tr/destekler/sanayi/ulusal-destek-programlari/1613-teknoloji-transferi-profesyoneli-cagrisi"},
+{l:"gir",g:"Patent",no:"1602",n:"TÜBİTAK Patent Destek Programı",d:"Uluslararası patent başvurusu (PD-200), uluslararası inceleme raporu (PD-201) ve EPO, JPO, KIPO, CNIPA ya da USPTO'dan tescil ödülü (PD-202). Ulusal patent destekleri kapandı.",t:"Aşamaya göre ücret desteği ve ödül",w:"TC vatandaşları, Türkiye'de yerleşik şirketler, üniversiteler, kamu kurumları.",r:"prodis",nx:"Yıl boyu açık.",cont:1,u:"https://tubitak.gov.tr/tr/destekler/sanayi/ulusal-destek-programlari/1602-tubitak-patent-destek-programi"},
+{l:"gir",g:"Patent",no:"1702",n:"Patent Tabanlı Teknoloji Transferi Destekleme Çağrısı",d:"Üniversite ve araştırma kurumlarının patentlerinin şirketlere lisanslanması ya da devriyle ticarileştirilmesi.",t:"Çağrıya göre",w:"Patent sahibi kurum ve alıcı şirket.",r:"prodis",nx:"Çağrıya bağlı.",u:"https://tubitak.gov.tr/tr/destekler/sanayi/ulusal-destek-programlari/1702-patent-tabanli-teknoloji-transferi-destekleme-cagrisi"},
+
+/* ---------- Eureka ---------- */
+{l:"sint",g:"Eureka",no:"1509",n:"Uluslararası Sanayi Ar-Ge Projeleri Destekleme Programı",d:"Eureka kümeleri, Eureka Network ve Globalstars çağrılarındaki Türk şirketlerinin ulusal bütçesi. Ulusal başvuru Türkçe, uluslararası öneri İngilizce ek olarak.",t:"KOBİ %75, büyük %60 (ilk 5 proje) · tek ortak 25 M TL, çok ortak 80 M TL",w:"Türkiye'de yerleşik sermaye şirketleri; üniversite hizmet sağlayıcı olabilir.",r:"prodis",nx:"Yıl boyu; ilgili Eureka çağrısının takvimiyle uyumlu.",cont:1,u:"https://tubitak.gov.tr/tr/destekler/sanayi/uluslararasi-ortakli-destek-programlari/1509-tubitak-uluslararasi-sanayi-ar-ge-projeleri-destekleme-programi"},
+{l:"sint",g:"Eureka",no:"1509 · Japonya",n:"Eureka Globalstars Japonya 2026",d:"En az bir Türk ve bir Japon şirketiyle ortak Ar-Ge; nükleer enerji, ilaç geliştirme ve rejeneratif tıp dışında bütün alanlar.",t:"1509 oranları",w:"Türk sermaye şirketi + Japon şirketi.",r:"ext",nx:"Uluslararası başvuru 20 Ocak 2027; ulusal tarihler e-postayla bildirilecek.",dl:"2027-01-20",u:"https://tubitak.gov.tr/tr/duyuru/eureka-globalstars-japonya-2026-cagrisi-acildi"},
+{l:"sint",g:"Eureka",no:"1509 · İspanya",n:"Eureka Network Türkiye–İspanya 2026",d:"En az bir Türk ve bir İspanyol şirketinin ortak Ar-Ge projesi. Üniversiteler doğrudan başvuramaz, hizmet sağlayıcı olarak katılır.",t:"1509 oranları",w:"Türk sermaye şirketi + İspanyol şirketi.",r:"ext",nx:"Uluslararası son tarih 3 Mart 2027.",dl:"2027-03-03",u:"https://tubitak.gov.tr/tr/duyuru/eureka-network-turkiye-ispanya-2026-yili-cagrisi-acildi"},
+{l:"sint",g:"Eureka",no:"1719",n:"Eureka Network Çağrıları",d:"Eureka Network kapsamındaki ikili ve çok taraflı şirket çağrıları (ör. Celtic-Next, Eurogia2030 küme çağrıları).",t:"Çağrıya göre",w:"Sermaye şirketleri.",r:"prodis",nx:"Çağrıya bağlı.",u:"https://tubitak.gov.tr/tr/destekler/sanayi/uluslararasi-ortakli-destek-programlari/1719-eureka-network-cagrilari"},
+{l:"sint",g:"Eurostars",no:"1709",n:"Eureka Eurostars",d:"Ar-Ge yoğun KOBİ öncülüğünde, en az bir başka Eurostars ülkesinden ortakla uluslararası proje. Üniversite ancak bir şirketle birlikte katılır.",t:"KOBİ %75, büyük %60, kamu ve üniversite %100 · Türk ortak 600.000 EUR'ya kadar · 36 ay",w:"Sermaye şirketi lider; üniversite ve araştırma kurumları ortak.",r:"prodis",nx:"2026/2 dönemi; kesim tarihleri çağrı metninde.",u:"https://tubitak.gov.tr/tr/destekler/sanayi/uluslararasi-ortakli-destek-programlari/1709-eureka-eurostars"},
+{l:"sint",g:"Eurostars",no:"ES",n:"Eurostars Koordinatörlük Desteği ve Eureka Seyahat Desteği",d:"Eurostars projelerinde koordinatörlük üstlenen Türk şirketlerine ek destek ve Eureka proje geliştirme seyahatleri.",t:"Program kurallarına göre",w:"Eureka/Eurostars başvurusu hazırlayan şirketler.",r:"prodis",nx:"Program sayfasına göre.",u:"https://tubitak.gov.tr/tr/destekler/sanayi/uluslararasi-ortakli-destek-programlari/eurostars-koordinatorluk-destegi-programi"},
+{l:"sint",g:"Diğer",no:"Innowwide",n:"Yenilikçi KOBİ'ler Ortaklığı: Innowwide 5. çağrı",d:"KOBİ'nin yenilikçi ürününün Avrupa dışı bir pazarda teknik ve ticari fizibilitesi; hedef ülkeden yerel ortak zorunlu, en az THS 4. En yüksek puanlı 70 öneri fonlanır.",t:"En çok 60.000 EUR, %70 · 6 ay",w:"Yenilikçi KOBİ'ler.",r:"ext",nx:"Son başvuru 1 Aralık 2026, 14:00 CET.",dl:"2026-12-01",u:"https://tubitak.gov.tr/tr/duyuru/yenilikci-kobiler-icin-avrupa-ortakligi-innowwide-5-cagrisi-acildi"},
+{l:"sint",g:"Diğer",no:"CORNET",n:"Kolektif Araştırma Ağı (CORNET)",d:"KOBİ birlikleri ve meslek örgütleri adına yürütülen uluslararası kolektif araştırma projeleri.",t:"Ulusal kurallara göre",w:"Sanayi birlikleri ve araştırma kuruluşları.",r:"uidb",nx:"Yılda iki CORNET çağrısı.",u:"https://tubitak.gov.tr/tr/cornet-kollektif-arastirma-agi"},
+
+/* ---------- Bilim ve Toplum ---------- */
+{l:"bt",g:"Okul ve çocuk",no:"4004",n:"Doğa Eğitimi ve Bilim Okulları",d:"Çocuk, genç ve yetişkinlere yönelik uygulamalı doğa ve bilim eğitimi projeleri; üniversitelerin en sık kullandığı Bilim ve Toplum programlarından.",t:"Proje bütçesi",w:"Üniversiteler, kamu kurumları, okullar, STK'lar.",r:"bito",nx:"Dönemsel çağrı.",s:1,u:"https://tubitak.gov.tr/tr/destekler/bilim-toplum/ulusal-destek-programlari/4004-doga-egitimi-ve-bilim-okullari-destekleme-programi"},
+{l:"bt",g:"Okul ve çocuk",no:"4005",n:"Yenilikçi Eğitim Uygulamaları",d:"Öğretmenlere yönelik yenilikçi eğitim yöntemleri ve bilim eğitimi projeleri.",t:"Proje bütçesi",w:"Üniversiteler ve eğitim kurumları.",r:"bito",nx:"Dönemsel çağrı.",s:1,u:"https://tubitak.gov.tr/tr/destekler/bilim-toplum/ulusal-destek-programlari/4005-yenilikci-egitim-uygulamalari-destekleme-programi"},
+{l:"bt",g:"Okul ve çocuk",no:"4006",n:"TÜBİTAK Bilim Fuarları (4006-A, 4006-B)",d:"5–12. sınıf öğrencilerinin tematik projelerle katıldığı okul bilim fuarları; 4006-C bilim fuarları festivali desteği.",t:"Fuar desteği",w:"Okullar.",r:"bito",nx:"13. dönem başvurusu 13 Kasım 2026, 17:30 (BİLİMİZ).",dl:"2026-11-13",u:"https://tubitak.gov.tr/tr/destekler/bilim-toplum/ulusal-destek-programlari/4006-tubitak-bilim-fuarlari-destekleme-programi"},
+{l:"bt",g:"Okul ve çocuk",no:"4009",n:"Köy Okullarına Yönelik Destek Programı",d:"Köy okullarındaki öğrencilere bilim etkinlikleri.",t:"Proje bütçesi",w:"Üniversiteler, okullar, STK'lar.",r:"bito",nx:"Dönemsel çağrı.",u:"https://tubitak.gov.tr/tr/destekler/bilim-toplum/ulusal-destek-programlari/4009-koy-okullarina-yonelik-destek-programi"},
+{l:"bt",g:"Toplum ve kapsayıcılık",no:"4007",n:"Bilim Şenlikleri Destekleme Programı",d:"İl ve ilçelerde halka açık bilim şenlikleri.",t:"Proje bütçesi",w:"Üniversiteler, belediyeler, kamu kurumları.",r:"bito",nx:"Dönemsel çağrı.",u:"https://tubitak.gov.tr/tr/destekler/bilim-toplum/ulusal-destek-programlari/4007-bilim-senlikleri-destekleme-programi"},
+{l:"bt",g:"Toplum ve kapsayıcılık",no:"4008",n:"Özel Gereksinimli Bireylere Yönelik Kapsayıcı Toplum Uygulamaları",d:"Özel gereksinimli bireylerin bilime katılımını artıran projeler.",t:"Proje bütçesi",w:"Üniversiteler, kamu kurumları, STK'lar.",r:"bito",nx:"Dönemsel çağrı.",s:1,u:"https://tubitak.gov.tr/tr/destekler/bilim-toplum/ulusal-destek-programlari/4008-ozel-gereksinimli-bireylere-yonelik-kapsayici-toplum-uygulamalari-destekleme-programi"},
+{l:"bt",g:"Toplum ve kapsayıcılık",no:"4003",n:"Bilim Merkezi ve Atölye Destek Programı",d:"Bilim merkezleri ve bilim atölyelerinin kurulması.",t:"Kuruluş desteği",w:"Belediyeler, üniversiteler, kamu kurumları.",r:"bito",nx:"Çağrıya bağlı.",u:"https://tubitak.gov.tr/tr/destekler/bilim-toplum/ulusal-destek-programlari/4003-bilim-merkezi-ve-atolye-destek-programi"},
+{l:"bt",g:"Toplum ve kapsayıcılık",no:"4001",n:"Ulusal ve Uluslararası Yarışma/Etkinlik Katılım Desteği",d:"Öğrencilerin ve takımların bilimsel yarışma ve etkinliklere katılımı.",t:"Katılım giderleri",w:"Öğrenci takımları ve okullar.",r:"bito",nx:"Program kurallarına göre.",u:"https://tubitak.gov.tr/tr/destekler/bilim-toplum/ulusal-destek-programlari/4001-ulusal-ve-uluslararasi-yarismaetkinlik-katilim-destegi"},
+{l:"bt",g:"Bilim iletişimi",no:"Söyleşi",n:"TÜBİTAK Bilim Söyleşileri",d:"Bilim insanlarının okullarda ve halka açık ortamlarda verdiği söyleşiler. 2026'da konuşmacı ücreti artırıldı.",t:"Konuşmacı ücreti",w:"Ev sahibi okul ya da kurum, konuşmacı bilim insanı.",r:"bito",nx:"Son başvuru 5 Kasım 2026, 17:30.",dl:"2026-11-05",s:1,u:"https://tubitak.gov.tr/tr/duyuru/tubitak-bilim-soylesileri-2026-yili-basvurulari-basladi"},
+{l:"bt",g:"Bilim iletişimi",no:"Teşvik",n:"Bilim ve Toplum Proje Teşvik Ödülleri",d:"Son üç yılda tamamlanmış Bilim ve Toplum projelerinin çıktılarını güçlendirmek için ödül; 1. Türkiye Bilim İletişimi Zirvesi'nde (ODTÜ) verildi.",t:"Ödül",w:"Projeyi yürüten kurumlar.",r:"bito",nx:"2026 başvuruları 29 Eylül'de kapandı.",dl:"2026-09-29",u:"https://tubitak.gov.tr/tr/destekler/bilim-toplum/ulusal-destek-programlari/bilim-ve-toplum-destek-programlari-proje-tesvik-odulleri"},
+{l:"bt",g:"Bilim iletişimi",no:"MTA",n:"Milli Teknoloji Atölyeleri ve Kulüpler Birliği",d:"Okullarda teknoloji atölyeleri kurulması ve teknoloji kulüplerinin ağı; ayrıca Ulusal Gökyüzü Gözlem Etkinliklerini Destekleme Çağrısı.",t:"Proje desteği",w:"Okullar ve kurumlar.",r:"bito",nx:"Çağrıya bağlı.",u:"https://tubitak.gov.tr/tr/destekler/bilim-toplum/ulusal-destek-programlari/milli-teknoloji-atolyeleri-proje-destegi"},
+
+/* ---------- Çevre ---------- */
+{l:"out",g:"Ödüller",no:"Ödül",n:"TÜBİTAK Bilim, Teşvik ve Hizmet Ödülleri",d:"Uluslararası düzeyde katkı (Bilim), genç araştırmacı (Teşvik) ve bilime hizmet (Hizmet) ödülleri. Aday gösterme ile; Teşvik Ödülü 2247-D başarı ölçütleri arasında.",t:"Ödül",w:"Aday gösterilen araştırmacılar.",r:"ext",nx:"Yıllık aday gösterme dönemi.",s:1},
+{l:"out",g:"Uluslararası kuruluş bursları",no:"EMBO",n:"EMBO Doktora Sonrası Araştırma Bursları",d:"Yaşam bilimlerinde başka bir ülkede doktora sonrası araştırma; EMBO ağı ve liderlik kursları. TÜBİTAK, EMBO üyesi olarak Türkiye'de koordine eder.",t:"1–2 yıl EMBO bursu",w:"Doktoralı ya da doktorasını bitirmek üzere olan, ilk isim yayını olan yaşam bilimcisi.",r:"ext",nx:"Bahar 2027 dönemi 22 Ocak 2027, 14:00 CET.",dl:"2027-01-22",u:"https://tubitak.gov.tr/tr/burslar/doktora-sonrasi/uluslararasi-burslar/embo-avrupa-molekuler-biyoloji-orgutu-destekleri"},
+{l:"out",g:"Uluslararası kuruluş bursları",no:"ICGEB",n:"ICGEB Burs ve Destekleri",d:"Uluslararası Gen Mühendisliği ve Biyoteknoloji Merkezi'nin doktora, doktora sonrası bursları ve etkinlik destekleri.",t:"ICGEB kurallarına göre",w:"Biyoteknoloji araştırmacıları.",r:"ext",nx:"ICGEB takvimi.",u:"https://tubitak.gov.tr/tr/burslar/doktora-sonrasi/uluslararasi-burslar/icgeb-uluslararasi-gen-muhendisligi-ve-biyoteknoloji-ars-mer-burslari"},
+{l:"out",g:"Yabancılara yönelik",no:"2216",n:"Uluslararası Araştırmacılar İçin Araştırma Burs Programı (2216, 2216B/C/D)",d:"Yabancı araştırmacıların Türkiye'de doktora sonrası ya da doktora sırası araştırması; TWAS (2216B), TÜBA–Özbekistan Aziz Sancar (2216C) ve WAITRO (2216D) ortaklı alt programlar. Türk ev sahibi araştırmacı için yabancı ekip üyesi kazanma yolu.",t:"Aylık burs",w:"Yabancı uyruklu araştırmacılar, Türkiye'deki ev sahibiyle.",r:"tybs",nx:"Alt programa göre.",s:1,u:"https://tubitak.gov.tr/tr/burslar/doktora-sonrasi/uluslararasi-burslar/2216-uluslararasi-arastirmacilar-icin-arastirma-burs-programi"},
+{l:"out",g:"Köprüler",no:"HE",n:"Horizon Europe Fon Atlası",d:"AB çerçeve programının bütün akışları ayrı atlasta. TÜBİTAK tarafı Ufuk Avrupa Ulusal İrtibat Noktaları ve 1071 köprüsüyle bağlanıyor.",t:"AB hibesi",w:"Türkiye ortak ülke; AB üyeleriyle aynı koşullar.",r:"ext",nx:"Ayrı atlas.",s:1,u:"https://claude.ai/code/artifact/2e41d29f-b789-4f65-90c9-17a4e1d8516b"},
+{l:"out",g:"Köprüler",no:"Fuat Sezgin",n:"Prof. Dr. Fuat Sezgin Bursları",d:"BİDEB'in lisansüstü ve doktora sonrası sayfalarında listelenen burs programı; ayrıntılar program sayfasında.",t:"Program kurallarına göre",w:"Program sayfasına göre.",r:"tybs",nx:"Çağrıya bağlı.",u:"https://tubitak.gov.tr/tr/burslar/doktora-sonrasi/arastirma-burs-programlari/prof-dr-fuat-sezgin-burslari"}
+];
+
+const fmt = new Intl.DateTimeFormat("tr-TR",{day:"numeric",month:"short",year:"numeric"});
+const fmtD = new Intl.DateTimeFormat("tr-TR",{day:"numeric"});
+const fmtM = new Intl.DateTimeFormat("tr-TR",{month:"short"});
+const daysTo = s => Math.round((new Date(s+"T00:00:00") - TODAY)/86400000);
+const fmtDT = new Intl.DateTimeFormat("tr-TR",{day:"numeric",month:"long",year:"numeric",hour:"2-digit",minute:"2-digit"});
+const fd = s => fmt.format(new Date(s+"T00:00:00"));
+D.forEach((x,i)=>{x.id="e"+i; x.dl0=x.dl||null; x.nx0=x.nx; x.live=[];});
+let LIVE = [];
+const ISO = /^\d{4}-\d{2}-\d{2}$/;
+function liveText(it, more){
+  let t = (it.kind==="intl" ? "Uluslararası son tarih " : "Son başvuru ") + fd(it.dl);
+  if(it.esign && ISO.test(it.esign)) t += " · e-imza " + fd(it.esign);
+  if(it.intl && ISO.test(it.intl)) t += " · uluslararası son tarih " + fd(it.intl);
+  if(more) t += ` · ${more} çağrı daha açık`;
+  return t + ".";
+}
+function applyLive(data){
+  LIVE = (data && Array.isArray(data.items)) ? data.items.filter(it=>it && ISO.test(it.dl) && daysTo(it.dl) >= 0) : [];
+  const byNo = new Map(D.map(x=>[x.no,x]));
+  D.forEach(x=>{x.dl=x.dl0; x.nx=x.nx0; x.live=[];});
+  LIVE.forEach(it=>{ it.cards = (it.targets||[]).map(t=>byNo.get(t)).filter(Boolean); it.cards.forEach(x=>x.live.push(it)); });
+  D.forEach(x=>{
+    if(x.live.length){ x.live.sort((a,b)=>a.dl.localeCompare(b.dl)); x.dl = x.live[0].dl; x.nx = liveText(x.live[0], x.live.length-1); }
+    x.status = !x.dl ? "none" : (daysTo(x.dl) < 0 ? "closed" : "open");
+  });
+}
+
+const state = {q:"", layers:new Set(), route:null, ssh:false, open:false, cont:false};
+try{ const s = JSON.parse(localStorage.getItem("tfa-filters")||"null"); if(s){state.q=s.q||"";state.layers=new Set(s.layers||[]);state.route=s.route||null;state.ssh=!!s.ssh;state.open=!!s.open;state.cont=!!s.cont;} }catch(e){}
+function save(){ try{localStorage.setItem("tfa-filters",JSON.stringify({q:state.q,layers:[...state.layers],route:state.route,ssh:state.ssh,open:state.open,cont:state.cont}))}catch(e){} }
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function renderStats(){
+  const nOpen = D.filter(x=>x.status==="open").length;
+  const nCont = D.filter(x=>x.cont).length;
+  document.getElementById("stats").innerHTML =
+   `<div><b>${D.length}</b><span>destek akışı</span></div><div><b>${nCont}</b><span>yıl boyu açık</span></div><div><b>${nOpen}</b><span>yaklaşan son tarih</span></div>`;
+}
+
+document.getElementById("routes").innerHTML = Object.entries(ROUTES).map(([k,r])=>{
+  const n = D.filter(x=>x.r===k).length;
+  return `<div class="route"><span class="tag">${n} akış</span><h3>${esc(r.label)}</h3><p>${esc(r.d)}</p></div>`;
+}).join("");
+
+function renderRail(){
+  const rows = [];
+  LIVE.forEach(it=>{
+    const c = it.cards[0];
+    rows.push({dl:it.dl, name: c ? `${it.cards.map(x=>x.no).join(" · ")} · ${c.n}` : `${it.label||"Çağrı"} · ${it.title}`,
+      layer: c ? LAYERS[c.l].short : "Duyuru", go: c ? c.id : null, href: it.url});
+  });
+  D.filter(x=>x.status==="open" && !x.live.length).forEach(x=>rows.push({dl:x.dl, name:`${x.no} · ${x.n}`, layer:LAYERS[x.l].short, go:x.id}));
+  rows.sort((a,b)=>a.dl.localeCompare(b.dl));
+  document.getElementById("rail").innerHTML = rows.map(r=>{
+    const d = daysTo(r.dl), dt = new Date(r.dl+"T00:00:00");
+    const inner = `<span class="date">${fmtD.format(dt)}<small>${fmtM.format(dt)} ${dt.getFullYear()}</small></span><span class="nm">${esc(r.name)}</span><span class="left">${d===0?"bugün":d===1?"yarın":d+" gün kaldı"} · ${esc(r.layer)}</span>`;
+    const cls = `dl${d<=30?" soon":""}`;
+    return r.go ? `<button class="${cls}" data-goto="${r.go}" type="button">${inner}</button>`
+                : `<a class="${cls}" href="${esc(r.href)}" target="_blank" rel="noopener">${inner}</a>`;
+  }).join("") || '<div class="empty">Önümüzdeki dönem için kayıtlı son başvuru tarihi yok.</div>';
+}
+
+const lc = document.getElementById("layerChips");
+lc.innerHTML = Object.entries(LAYERS).map(([k,v])=>`<button class="chip" type="button" data-layer="${k}" aria-pressed="false" style="--c:var(${v.c})"><i></i>${esc(v.short)}</button>`).join("");
+const oc = document.getElementById("otherChips");
+oc.innerHTML = Object.entries(ROUTES).map(([k,v])=>`<button class="chip" type="button" data-route="${k}" aria-pressed="false">${esc(v.label)}</button>`).join("")
+ + `<button class="chip" type="button" id="fSsh" aria-pressed="false">SBB'ye uygun</button><button class="chip" type="button" id="fCont" aria-pressed="false">Yıl boyu açık</button><button class="chip" type="button" id="fOpen" aria-pressed="false">Yalnızca yaklaşan tarihli</button>`;
+
+function syncChips(){
+  lc.querySelectorAll("[data-layer]").forEach(b=>b.setAttribute("aria-pressed",state.layers.has(b.dataset.layer)));
+  oc.querySelectorAll("[data-route]").forEach(b=>b.setAttribute("aria-pressed",state.route===b.dataset.route));
+  document.getElementById("fSsh").setAttribute("aria-pressed",state.ssh);
+  document.getElementById("fOpen").setAttribute("aria-pressed",state.open);
+  document.getElementById("fCont").setAttribute("aria-pressed",state.cont);
+  document.getElementById("q").value = state.q;
+}
+
+function card(x){
+  let st = "";
+  if(x.status==="open"){ const d=daysTo(x.dl); st = `<span class="tag open">${fmt.format(new Date(x.dl+"T00:00:00"))} · ${d} gün</span>`; }
+  else if(x.status==="closed"){ st = `<span class="tag closed">${fmt.format(new Date(x.dl+"T00:00:00"))}</span>`; }
+  return `<article class="card" id="${x.id}">
+    <div class="card-top"><h3>${esc(x.n)}</h3><span class="no">${esc(x.no)}</span></div>
+    <p class="d">${esc(x.d)}</p>
+    <dl class="meta">
+      <dt>Destek</dt><dd>${esc(x.t)}</dd>
+      <dt>Kim</dt><dd>${esc(x.w)}</dd>
+      <dt>Kanal</dt><dd>${esc(ROUTES[x.r].label)}</dd>
+      <dt>Sıradaki</dt><dd>${esc(x.nx)}</dd>
+    </dl>
+    <div class="tags">${st}${x.live.length?'<span class="tag live">Güncel tarama</span>':""}${x.cont?'<span class="tag cont">Yıl boyu açık</span>':""}${x.s?'<span class="tag ssh">SBB</span>':""}</div>
+    <div class="links">${x.u?`<a class="go" href="${esc(x.u)}" target="_blank" rel="noopener">Resmî sayfa ↗</a>`:""}${x.live.length && x.live[0].url!==x.u?`<a class="go" href="${esc(x.live[0].url)}" target="_blank" rel="noopener">Kaynak duyuru ↗</a>`:""}</div>
+  </article>`;
+}
+
+function match(x){
+  if(state.layers.size && !state.layers.has(x.l)) return false;
+  if(state.route && x.r!==state.route) return false;
+  if(state.ssh && !x.s) return false;
+  if(state.open && x.status!=="open") return false;
+  if(state.cont && !x.cont) return false;
+  if(state.q){
+    const hay = (x.no+" "+x.n+" "+x.d+" "+x.g+" "+x.t+" "+x.w+" "+x.nx+" "+LAYERS[x.l].label).toLocaleLowerCase("tr");
+    return state.q.toLocaleLowerCase("tr").split(/\s+/).filter(Boolean).every(w=>hay.includes(w));
+  }
+  return true;
+}
+
+function render(){
+  const out = []; let total = 0;
+  for(const [k,L] of Object.entries(LAYERS)){
+    const items = D.filter(x=>x.l===k && match(x));
+    if(!items.length) continue;
+    total += items.length;
+    const groups = [];
+    items.forEach(x=>{ let g=groups.find(g=>g.n===x.g); if(!g){g={n:x.g,a:[]};groups.push(g);} g.a.push(x); });
+    out.push(`<div class="layer" id="L-${k}" style="--c:var(${L.c})">
+      <div class="layer-h"><h2>${esc(L.label)}</h2><span class="n">${items.length} akış</span></div>
+      <p class="layer-intro">${esc(L.intro)}</p>
+      ${groups.map(g=>`<div class="group-h">${esc(g.n)}</div><div class="grid">${g.a.map(card).join("")}</div>`).join("")}
+    </div>`);
+  }
+  document.getElementById("atlas").innerHTML = out.join("") || '<div class="empty">Bu filtrelerle eşleşen akış yok. Arama terimini kısaltın ya da filtreleri temizleyin.</div>';
+  document.getElementById("count").textContent = `${total} / ${D.length} akış`;
+  syncChips(); save();
+}
+
+function clearAll(){state.q="";state.layers.clear();state.route=null;state.ssh=false;state.open=false;state.cont=false;}
+lc.addEventListener("click",e=>{const b=e.target.closest("[data-layer]"); if(!b)return; const k=b.dataset.layer; state.layers.has(k)?state.layers.delete(k):state.layers.add(k); render();});
+oc.addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b)return;
+  if(b.dataset.route){state.route = state.route===b.dataset.route?null:b.dataset.route;}
+  else if(b.id==="fSsh"){state.ssh=!state.ssh;}
+  else if(b.id==="fOpen"){state.open=!state.open;}
+  else if(b.id==="fCont"){state.cont=!state.cont;}
+  render();
+});
+document.getElementById("q").addEventListener("input",e=>{state.q=e.target.value.trim(); render();});
+document.getElementById("reset").addEventListener("click",()=>{clearAll();render();});
+const smooth = () => matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth";
+function goto(id){
+  if(!document.getElementById(id)){ clearAll(); render(); }
+  const t=document.getElementById(id); if(!t) return;
+  t.scrollIntoView({behavior:smooth(), block:"center"});
+  t.classList.add("flash"); setTimeout(()=>t.classList.remove("flash"),1800);
+}
+document.getElementById("rail").addEventListener("click",e=>{const b=e.target.closest("[data-goto]"); if(b) goto(b.dataset.goto);});
+document.getElementById("map").addEventListener("click",e=>{
+  const b=e.target.closest("[data-jump]"); if(!b) return;
+  clearAll(); render();
+  const t=document.getElementById("L-"+b.dataset.jump); if(t) t.scrollIntoView({behavior:smooth(),block:"start"});
+});
+function renderAll(){ renderStats(); renderRail(); render(); }
+const btn = document.getElementById("refresh"), info = document.getElementById("syncInfo");
+async function loadLive(manual){
+  btn.disabled = true; btn.textContent = "Güncelleniyor…";
+  try{
+    const r = await fetch(JSON_URL + "?t=" + Date.now(), {cache:"no-store"});
+    if(!r.ok) throw new Error("HTTP " + r.status);
+    const data = await r.json();
+    applyLive(data); renderAll();
+    if(!data.generated){ info.textContent = "Otomatik tarama henüz çalışmadı; 26 Ekim 2026'da derlenen tarihler gösteriliyor."; }
+    else{
+      const g = new Date(data.generated);
+      info.textContent = `Son tarama: ${isNaN(g) ? data.generated : fmtDT.format(g)} · ${LIVE.length} açık çağrı bulundu` + (manual ? " · takvim yenilendi" : "");
+    }
+  }catch(e){
+    applyLive(null); renderAll();
+    info.textContent = "Güncel takvim dosyası okunamadı; 26 Ekim 2026'da derlenen tarihler gösteriliyor.";
+  }finally{ btn.disabled = false; btn.textContent = "Takvimi güncelle"; }
+}
+btn.addEventListener("click", ()=>loadLive(true));
+applyLive(null); renderAll(); loadLive(false);
+</script>
+</body>
+</html>
