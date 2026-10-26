@@ -1,0 +1,56 @@
+name: Takvimi güncelle
+
+on:
+  schedule:
+    - cron: "0 4 * * *"   # her gün 04:00 UTC = 07:00 Türkiye
+  workflow_dispatch:       # Actions sekmesinden elle çalıştırma
+  push:
+    branches: [main]
+    paths-ignore: ["takvim.json"]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  tara-ve-yayinla:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Paketleri kur
+        run: pip install requests beautifulsoup4
+
+      - name: TÜBİTAK duyurularını tara
+        id: scan
+        continue-on-error: true
+        run: python scripts/tara.py --out takvim.json
+
+      - name: takvim.json'u depoya kaydet
+        if: steps.scan.outcome == 'success'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add takvim.json
+          git diff --cached --quiet || (git commit -m "Takvim: $(date -u +%F)" && git push)
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
