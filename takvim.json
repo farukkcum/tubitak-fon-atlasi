@@ -1,49 +1,8 @@
 {
- "generated": "2026-10-26T20:42+03:00",
+ "generated": "2026-10-27T07:29+03:00",
  "scanned": 107,
  "errors": 0,
  "items": [
-  {
-   "targets": [
-    "1509 · İspanya"
-   ],
-   "label": null,
-   "title": "Eureka Network Türkiye-İspanya 2026 Yılı Çağrısı Açıldı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/eureka-network-turkiye-ispanya-2026-yili-cagrisi-acildi",
-   "origin": "duyuru",
-   "dl": "2026-10-26",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "26 Eki 2026"
-  },
-  {
-   "targets": [],
-   "label": "Eureka çağrısı",
-   "title": "Eureka-Celtic-Next 2026 Sonbahar Çağrısı Açıldı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/eureka-celtic-next-2026-sonbahar-cagrisi-acildi",
-   "origin": "duyuru",
-   "dl": "2026-10-26",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "26 Ekim 2026"
-  },
-  {
-   "targets": [
-    "1501",
-    "1507"
-   ],
-   "label": null,
-   "title": "1501-Sanayi Ar-Ge Destek Programı ve 1507-KOBİ Ar-Ge Başlangıç Destek Programı 2026 yılı 2. Çağrıları Açıldı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/1501-sanayi-ar-ge-destek-programi-ve-1507-kobi-ar-ge-baslangic-destek-programi-2026-yili-2-cagrilari-acildi",
-   "origin": "duyuru",
-   "dl": "2026-10-26",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "Çağrı Kapanış Tarihi | 26 Ekim 2026 son başvuru tablosu."
-  },
   {
    "targets": [
     "2224-A",
@@ -155,6 +114,21 @@
    "esign": null,
    "intl": null,
    "sentence": "5 Kasım 2026, Saat 17.30"
+  },
+  {
+   "targets": [
+    "1501",
+    "1507"
+   ],
+   "label": null,
+   "title": "1501-Sanayi Ar-Ge Destek Programı ve 1507-KOBİ Ar-Ge Başlangıç Destek Programı 2026 yılı 2. Çağrıları Açıldı",
+   "url": "https://tubitak.gov.tr/tr/duyuru/1501-sanayi-ar-ge-destek-programi-ve-1507-kobi-ar-ge-baslangic-destek-programi-2026-yili-2-cagrilari-acildi",
+   "origin": "duyuru",
+   "dl": "2026-11-09",
+   "kind": "son",
+   "esign": null,
+   "intl": null,
+   "sentence": "Kuruluş Bazlı Ön Kayıt Başvurusu Son Tarihi | 9 Kasım 2026 son başvuru tablosu."
   },
   {
    "targets": [
@@ -387,7 +361,7 @@
    "dl": "2026-12-16",
    "kind": "son",
    "esign": null,
-   "intl": "2026-10-26",
+   "intl": null,
    "sentence": "Türkiye’den katılımcıların uluslararası başvuru formuyla birlikte TÜBİTAK 1719-Eureka Afetlerde Dirençlilik ulusal çağrısına 16 Aralık 2026 tarihine kadar ulusal başvurularını"
   },
   {
@@ -481,6 +455,20 @@
    "esign": null,
    "intl": null,
    "sentence": "15 Şubat 2027 (15:00, CET)"
+  },
+  {
+   "targets": [
+    "1509 · İspanya"
+   ],
+   "label": null,
+   "title": "Eureka Network Türkiye-İspanya 2026 Yılı Çağrısı Açıldı",
+   "url": "https://tubitak.gov.tr/tr/duyuru/eureka-network-turkiye-ispanya-2026-yili-cagrisi-acildi",
+   "origin": "duyuru",
+   "dl": "2027-03-03",
+   "kind": "son",
+   "esign": null,
+   "intl": null,
+   "sentence": "3 Mart 2027"
   },
   {
    "targets": [],
