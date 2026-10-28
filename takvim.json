@@ -1,80 +1,8 @@
 {
- "generated": "2026-10-27T07:29+03:00",
- "scanned": 107,
+ "generated": "2026-10-28T07:38+03:00",
+ "scanned": 110,
  "errors": 0,
  "items": [
-  {
-   "targets": [
-    "2224-A",
-    "2224-B"
-   ],
-   "label": null,
-   "title": "2224-Bilimsel Etkinliklere Katılımı Destekleme Programları 2026 Yılı 3. Dönem Çağrıları Açıldı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/2224-bilimsel-etkinliklere-katilimi-destekleme-programlari-2026-yili-3-donem-cagrilari-acildi",
-   "origin": "duyuru",
-   "dl": "2026-10-27",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "2026/3 | 5 Ekim 2026 | 27 Ekim 2026 son başvuru tablosu."
-  },
-  {
-   "targets": [
-    "2211"
-   ],
-   "label": null,
-   "title": "2211-Yurt İçi Doktora Burs Programları 2026 Yılı 2. Dönem Çağrıları Başvuruya Açıldı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/2211-yurt-ici-doktora-burs-programlari-2026-yili-2-donem-cagrilari-basvuruya-acildi",
-   "origin": "duyuru",
-   "dl": "2026-10-27",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "2026/2 | 5 Ekim 2026 | 27 Ekim 2026 son başvuru tablosu."
-  },
-  {
-   "targets": [
-    "2210"
-   ],
-   "label": null,
-   "title": "2210-Yurt İçi Yüksek Lisans Burs Programları 2026 Yılı 2. Dönem Çağrıları Açıldı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/2210-yurt-ici-yuksek-lisans-burs-programlari-2026-yili-2-donem-cagrilari-acildi",
-   "origin": "duyuru",
-   "dl": "2026-10-27",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "2026/2 | 5 Ekim 2026 | 27 Ekim 2026 son başvuru tablosu."
-  },
-  {
-   "targets": [
-    "2205"
-   ],
-   "label": null,
-   "title": "2205-Lisans Burs Programı 2026 Yılı 2. Dönem Çağrısı Açıldı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/2205-lisans-burs-programi-2026-yili-2-donem-cagrisi-acildi",
-   "origin": "duyuru",
-   "dl": "2026-10-27",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "2026/2 | 5 Ekim 2026 | 27 Ekim 2026 son başvuru tablosu."
-  },
-  {
-   "targets": [
-    "2223-B",
-    "2223-C"
-   ],
-   "label": null,
-   "title": "2223-Yurt İçi Bilimsel Etkinlikleri Destekleme Programları 2026 Yılı 3. Dönem Çağrıları Açıldı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/2223-yurt-ici-bilimsel-etkinlikleri-destekleme-programlari-2026-yili-3-donem-cagrilari-acildi",
-   "origin": "duyuru",
-   "dl": "2026-10-27",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "2026/3 | 5 Ekim 2026 | 27 Ekim 2026 son başvuru tablosu."
-  },
   {
    "targets": [],
    "label": "Eureka çağrısı",
@@ -86,20 +14,6 @@
    "esign": null,
    "intl": null,
    "sentence": "Çağrısı’na 29 Ekim 2026 tarihine kadar başvuru yapılabilecektir."
-  },
-  {
-   "targets": [
-    "1833"
-   ],
-   "label": null,
-   "title": "1833 SAYEM Yeşil Dönüşüm 2026-1 Çağrısı 2. Aşaması Başvuruya Açıldı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/1833-sayem-yesil-donusum-2026-1-cagrisi-2-asamasi-basvuruya-acildi",
-   "origin": "duyuru",
-   "dl": "2026-10-30",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "16 Haziran- 30 Ekim 2026:"
   },
   {
    "targets": [
@@ -363,6 +277,18 @@
    "esign": null,
    "intl": null,
    "sentence": "Türkiye’den katılımcıların uluslararası başvuru formuyla birlikte TÜBİTAK 1719-Eureka Afetlerde Dirençlilik ulusal çağrısına 16 Aralık 2026 tarihine kadar ulusal başvurularını"
+  },
+  {
+   "targets": [],
+   "label": "İkili işbirliği çağrısı",
+   "title": "2508 TÜBİTAK – Slovenya Araştırma ve Yenilik Ajansı (ARIS) İkili İş Birliği Programı 2026 Yılı Çağrısı Açıldı",
+   "url": "https://tubitak.gov.tr/tr/duyuru/2508-tubitak-slovenya-arastirma-ve-yenilik-ajansi-aris-ikili-birligi-programi-2026-yili-cagrisi-acildi",
+   "origin": "duyuru",
+   "dl": "2026-12-21",
+   "kind": "son",
+   "esign": null,
+   "intl": null,
+   "sentence": "21 Aralık 2026 (23:59, TSİ)"
   },
   {
    "targets": [
