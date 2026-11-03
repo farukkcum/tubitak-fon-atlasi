@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-02T07:53+03:00",
+ "generated": "2026-11-03T07:47+03:00",
  "scanned": 110,
  "errors": 0,
  "items": [
@@ -59,6 +59,20 @@
    "esign": null,
    "intl": null,
    "sentence": "3.Çağrı Dönemi | 1 Eylül 2026 | 13 Kasım 2026 son başvuru tablosu."
+  },
+  {
+   "targets": [
+    "2247-C"
+   ],
+   "label": null,
+   "title": "2247-C Stajyer Araştırmacı Burs Programı (STAR) 2026 Yılı 2. Dönem STAR Lisans ve STAR Öğretmen Çağrıları Açıldı",
+   "url": "https://tubitak.gov.tr/tr/duyuru/2247-c-stajyer-arastirmaci-burs-programi-star-2026-yili-2-donem-star-lisans-ve-star-ogretmen-cagrilari-acildi",
+   "origin": "duyuru",
+   "dl": "2026-11-16",
+   "kind": "son",
+   "esign": null,
+   "intl": null,
+   "sentence": "STAR programının ikinci aşamasında lisans öğrencileri ve öğretmenler, proje yürütücülerinin talepleri doğrultusunda projelerde görev almak üzere 2 Kasım 2026-16 Kasım 2026 (17.30, TSİ) tarihlerinde başvuru yapabileceklerdir."
   },
   {
    "targets": [
