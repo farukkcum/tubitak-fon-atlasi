@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-04T07:51+03:00",
+ "generated": "2026-11-05T07:53+03:00",
  "scanned": 110,
  "errors": 0,
  "items": [
@@ -291,6 +291,20 @@
    "esign": null,
    "intl": null,
    "sentence": "21 Aralık 2026 (23:59, TSİ)"
+  },
+  {
+   "targets": [
+    "2244"
+   ],
+   "label": null,
+   "title": "2244–Sanayi Doktora Programı 2026 Yılı Çağrısı Açıldı",
+   "url": "https://tubitak.gov.tr/tr/duyuru/2244-sanayi-doktora-programi-2026-yili-cagrisi-acildi-0",
+   "origin": "duyuru",
+   "dl": "2026-12-22",
+   "kind": "son",
+   "esign": null,
+   "intl": null,
+   "sentence": "22 Aralık 2026"
   },
   {
    "targets": [
