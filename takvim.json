@@ -1,22 +1,8 @@
 {
- "generated": "2026-11-05T07:53+03:00",
- "scanned": 110,
+ "generated": "2026-11-06T07:52+03:00",
+ "scanned": 111,
  "errors": 0,
  "items": [
-  {
-   "targets": [
-    "Söyleşi"
-   ],
-   "label": null,
-   "title": "TÜBİTAK Bilim Söyleşileri 2026 Yılı Başvuruları Başladı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/tubitak-bilim-soylesileri-2026-yili-basvurulari-basladi",
-   "origin": "duyuru",
-   "dl": "2026-11-05",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "5 Kasım 2026, Saat 17.30"
-  },
   {
    "targets": [
     "1501",
@@ -31,6 +17,20 @@
    "esign": null,
    "intl": null,
    "sentence": "Kuruluş Bazlı Ön Kayıt Başvurusu Son Tarihi | 9 Kasım 2026 son başvuru tablosu."
+  },
+  {
+   "targets": [
+    "Söyleşi"
+   ],
+   "label": null,
+   "title": "TÜBİTAK Bilim Söyleşileri 2026 Yılı Başvurularının Süresi Uzatıldı",
+   "url": "https://tubitak.gov.tr/tr/duyuru/tubitak-bilim-soylesileri-2026-yili-basvurularinin-suresi-uzatildi",
+   "origin": "duyuru",
+   "dl": "2026-11-13",
+   "kind": "son",
+   "esign": null,
+   "intl": null,
+   "sentence": "13 Kasım 2026 (17.30, TSİ)"
   },
   {
    "targets": [
