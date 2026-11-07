@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-06T07:52+03:00",
+ "generated": "2026-11-07T07:45+03:00",
  "scanned": 111,
  "errors": 0,
  "items": [
@@ -385,6 +385,20 @@
    "esign": null,
    "intl": null,
    "sentence": "1 Şubat 2027"
+  },
+  {
+   "targets": [
+    "2236-A"
+   ],
+   "label": null,
+   "title": "2236 - A Uluslararası Deneyimli Araştırmacı Dolaşımı Destek Programı",
+   "url": "https://tubitak.gov.tr/tr/burslar/doktora-sonrasi/arastirma-burs-programlari/2236a-uluslararasi-deneyimli-arastirmaci-dolasimi-destek-programi",
+   "origin": "program sayfası",
+   "dl": "2027-02-02",
+   "kind": "son",
+   "esign": null,
+   "intl": null,
+   "sentence": "2026 | 2 Kasım 2026 | 2 Şubat 2027 son başvuru tablosu."
   },
   {
    "targets": [],
