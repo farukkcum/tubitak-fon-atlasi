@@ -1,6 +1,6 @@
 {
- "generated": "2026-11-08T14:07+03:00",
- "scanned": 111,
+ "generated": "2026-11-09T15:38+03:00",
+ "scanned": 112,
  "errors": 0,
  "items": [
   {
@@ -156,6 +156,21 @@
    "esign": null,
    "intl": "2026-11-16",
    "sentence": "23 Kasım 2026 (23:59, TSİ)"
+  },
+  {
+   "targets": [
+    "1507",
+    "1707"
+   ],
+   "label": null,
+   "title": "1507-KOBİ Ar-Ge Başlangıç Destek Programı ve 1707-Siparişe Dayalı Ar-Ge Projeleri için KOBİ Destekleme Programı 2026 Yılı Çağrılarının Süresi Uzatıldı",
+   "url": "https://tubitak.gov.tr/tr/duyuru/1507-kobi-ar-ge-baslangic-destek-programi-ve-1707-siparise-dayali-ar-ge-projeleri-icin-kobi-destekleme-programi-2026-yili-cagrilarinin-suresi-uzatildi",
+   "origin": "duyuru",
+   "dl": "2026-11-25",
+   "kind": "son",
+   "esign": null,
+   "intl": null,
+   "sentence": "Kuruluş Bazlı Ön Kayıt Başvurusu Son Tarihi | 23 Kasım 2026 | 25 Kasım 2026 son başvuru tablosu."
   },
   {
    "targets": [
