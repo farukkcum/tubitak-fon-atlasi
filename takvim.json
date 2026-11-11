@@ -1,6 +1,6 @@
 {
- "generated": "2026-11-10T15:17+03:00",
- "scanned": 112,
+ "generated": "2026-11-11T14:45+03:00",
+ "scanned": 113,
  "errors": 0,
  "items": [
   {
@@ -85,7 +85,7 @@
    "dl": "2026-11-16",
    "kind": "son",
    "esign": null,
-   "intl": "2026-11-10",
+   "intl": null,
    "sentence": "16 Kasım 2026 (23:59, TSİ)"
   },
   {
@@ -171,6 +171,20 @@
    "esign": null,
    "intl": null,
    "sentence": "Kuruluş Bazlı Ön Kayıt Başvurusu Son Tarihi | 23 Kasım 2026 | 25 Kasım 2026 son başvuru tablosu."
+  },
+  {
+   "targets": [
+    "4006"
+   ],
+   "label": null,
+   "title": "4006-TÜBİTAK Bilim Fuarları Destekleme Programı 13. Dönem Çağrılarının Başvuru Süresi Uzatıldı",
+   "url": "https://tubitak.gov.tr/tr/duyuru/4006-tubitak-bilim-fuarlari-destekleme-programi-13-donem-cagrilarinin-basvuru-suresi-uzatildi",
+   "origin": "duyuru",
+   "dl": "2026-11-30",
+   "kind": "son",
+   "esign": null,
+   "intl": null,
+   "sentence": "30 Kasım 2026 (17.30, TSİ)"
   },
   {
    "targets": [
@@ -334,6 +348,18 @@
    "esign": null,
    "intl": null,
    "sentence": "31 Aralık 2026 (23:59, TSİ)"
+  },
+  {
+   "targets": [],
+   "label": "Ufuk Avrupa ortak çağrısı",
+   "title": "Kişiselleştirilmiş Tıp Avrupa Ortaklığı 2027 Yılı Çağrısı Açıldı",
+   "url": "https://tubitak.gov.tr/tr/duyuru/kisisellestirilmis-tip-avrupa-ortakligi-2027-yili-cagrisi-acildi",
+   "origin": "duyuru",
+   "dl": "2027-01-20",
+   "kind": "son",
+   "esign": null,
+   "intl": "2027-05-25",
+   "sentence": "20 Ocak 2027"
   },
   {
    "targets": [
