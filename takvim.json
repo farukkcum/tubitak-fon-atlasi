@@ -1,8 +1,36 @@
 {
- "generated": "2026-11-12T15:18+03:00",
- "scanned": 114,
+ "generated": "2026-11-13T14:57+03:00",
+ "scanned": 113,
  "errors": 0,
  "items": [
+  {
+   "targets": [
+    "4004"
+   ],
+   "label": null,
+   "title": "4004-Doğa Eğitimi ve Bilim Okulları Destekleme Programı’nın 20. Dönem Çağrısı Yayınlandı",
+   "url": "https://tubitak.gov.tr/tr/duyuru/4004-doga-egitimi-ve-bilim-okullari-destekleme-programinin-20-donem-cagrisi-yayinlandi",
+   "origin": "duyuru",
+   "dl": "2026-11-13",
+   "kind": "son",
+   "esign": null,
+   "intl": null,
+   "sentence": "13 Kas 2026"
+  },
+  {
+   "targets": [
+    "4005"
+   ],
+   "label": null,
+   "title": "4005-Yenilikçi Eğitim Uygulamaları Destekleme Programı’nın 14. Çağrısı Yayınlandı",
+   "url": "https://tubitak.gov.tr/tr/duyuru/4005-yenilikci-egitim-uygulamalari-destekleme-programinin-14-cagrisi-yayinlandi",
+   "origin": "duyuru",
+   "dl": "2026-11-13",
+   "kind": "son",
+   "esign": null,
+   "intl": null,
+   "sentence": "13 Kas 2026"
+  },
   {
    "targets": [
     "Söyleşi"
