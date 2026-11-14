@@ -1,78 +1,8 @@
 {
- "generated": "2026-11-13T14:57+03:00",
+ "generated": "2026-11-14T14:16+03:00",
  "scanned": 113,
  "errors": 0,
  "items": [
-  {
-   "targets": [
-    "4004"
-   ],
-   "label": null,
-   "title": "4004-Doğa Eğitimi ve Bilim Okulları Destekleme Programı’nın 20. Dönem Çağrısı Yayınlandı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/4004-doga-egitimi-ve-bilim-okullari-destekleme-programinin-20-donem-cagrisi-yayinlandi",
-   "origin": "duyuru",
-   "dl": "2026-11-13",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "13 Kas 2026"
-  },
-  {
-   "targets": [
-    "4005"
-   ],
-   "label": null,
-   "title": "4005-Yenilikçi Eğitim Uygulamaları Destekleme Programı’nın 14. Çağrısı Yayınlandı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/4005-yenilikci-egitim-uygulamalari-destekleme-programinin-14-cagrisi-yayinlandi",
-   "origin": "duyuru",
-   "dl": "2026-11-13",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "13 Kas 2026"
-  },
-  {
-   "targets": [
-    "Söyleşi"
-   ],
-   "label": null,
-   "title": "TÜBİTAK Bilim Söyleşileri 2026 Yılı Başvurularının Süresi Uzatıldı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/tubitak-bilim-soylesileri-2026-yili-basvurularinin-suresi-uzatildi",
-   "origin": "duyuru",
-   "dl": "2026-11-13",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "13 Kasım 2026 (17.30, TSİ)"
-  },
-  {
-   "targets": [
-    "4006"
-   ],
-   "label": null,
-   "title": "4006-TÜBİTAK Bilim Fuarları Destekleme Programı 13. Dönem 4006-A ve 4006-B Çağrıları Yayınlandı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/4006-tubitak-bilim-fuarlari-destekleme-programi-13-donem-4006-ve-4006-b-cagrilari-yayinlandi",
-   "origin": "duyuru",
-   "dl": "2026-11-13",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "13 Kasım 2026 (saat 17:30)"
-  },
-  {
-   "targets": [
-    "1707"
-   ],
-   "label": null,
-   "title": "1707 Sipariş Ar-Ge 2026 Yılı 3. Çağrısı Açıldı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/1707-siparis-ar-ge-2026-yili-3-cagrisi-acildi",
-   "origin": "duyuru",
-   "dl": "2026-11-13",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "3.Çağrı Dönemi | 1 Eylül 2026 | 13 Kasım 2026 son başvuru tablosu."
-  },
   {
    "targets": [
     "2247-C"
@@ -252,6 +182,34 @@
    "esign": null,
    "intl": "2026-12-02",
    "sentence": "8 Aralık 2026 (23:59, TSİ)"
+  },
+  {
+   "targets": [
+    "4004"
+   ],
+   "label": null,
+   "title": "4004-Doğa Eğitimi ve Bilim Okulları Destekleme Programı’nın 20. Dönem Çağrısı Yayınlandı",
+   "url": "https://tubitak.gov.tr/tr/duyuru/4004-doga-egitimi-ve-bilim-okullari-destekleme-programinin-20-donem-cagrisi-yayinlandi",
+   "origin": "duyuru",
+   "dl": "2026-12-14",
+   "kind": "son",
+   "esign": null,
+   "intl": null,
+   "sentence": "14 Aralık 2026 (17.30, TSİ)"
+  },
+  {
+   "targets": [
+    "4005"
+   ],
+   "label": null,
+   "title": "4005-Yenilikçi Eğitim Uygulamaları Destekleme Programı’nın 14. Çağrısı Yayınlandı",
+   "url": "https://tubitak.gov.tr/tr/duyuru/4005-yenilikci-egitim-uygulamalari-destekleme-programinin-14-cagrisi-yayinlandi",
+   "origin": "duyuru",
+   "dl": "2026-12-14",
+   "kind": "son",
+   "esign": null,
+   "intl": null,
+   "sentence": "14 Aralık 2026 (17.30, TSİ)"
   },
   {
    "targets": [
