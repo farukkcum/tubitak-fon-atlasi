@@ -1,48 +1,8 @@
 {
- "generated": "2026-11-20T15:36+03:00",
- "scanned": 113,
+ "generated": "2026-11-21T15:14+03:00",
+ "scanned": 112,
  "errors": 0,
  "items": [
-  {
-   "targets": [
-    "1812"
-   ],
-   "label": null,
-   "title": "Türkiye’nin İlk Yatırım Tabanlı Girişimcilik Destek Programı olan BiGG Yatırım Programı’nın 2026-2 Çağrısı Açıldı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/turkiyenin-ilk-yatirim-tabanli-girisimcilik-destek-programi-olan-bigg-yatirim-programinin-2026-2-cagrisi-acildi",
-   "origin": "duyuru",
-   "dl": "2026-11-20",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "Aşama 2 değerlendirmeleri (panel değerlendirmesi ve TÜBİTAK BİGG Fonu görüşlerinin alınması) | 12 Ekim 2026 – 20 Kasım 2026 son başvuru tablosu."
-  },
-  {
-   "targets": [
-    "1071 · DUT"
-   ],
-   "label": null,
-   "title": "Ufuk Avrupa Programı Kentsel Geçişleri Sürdürülebilir Bir Geleceğe Yönlendirme Ortaklığı (DUT) 2026 Çağrısı Açıldı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/ufuk-avrupa-programi-kentsel-gecisleri-surdurulebilir-bir-gelecege-yonlendirme-ortakligi-dut-2026-cagrisi-acildi",
-   "origin": "duyuru",
-   "dl": "2026-11-20",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "20 Kasım 2026"
-  },
-  {
-   "targets": [],
-   "label": "BiGG çağrısı",
-   "title": "BiGG+ Tohum Yatırım 2026 Yılı 1. Çağrısı Açılıyor",
-   "url": "https://tubitak.gov.tr/tr/duyuru/bigg-tohum-yatirim-2026-yili-1-cagrisi-aciliyor",
-   "origin": "duyuru",
-   "dl": "2026-11-20",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "Başvurular 5 Ekim 2026-20 Kasım 2026 tarihleri arasında"
-  },
   {
    "targets": [
     "2209-A",
@@ -74,6 +34,20 @@
   },
   {
    "targets": [
+    "1071 · DUT"
+   ],
+   "label": null,
+   "title": "Ufuk Avrupa Programı Kentsel Geçişleri Sürdürülebilir Bir Geleceğe Yönlendirme Ortaklığı (DUT) 2026 Çağrısı Açıldı",
+   "url": "https://tubitak.gov.tr/tr/duyuru/ufuk-avrupa-programi-kentsel-gecisleri-surdurulebilir-bir-gelecege-yonlendirme-ortakligi-dut-2026-cagrisi-acildi",
+   "origin": "duyuru",
+   "dl": "2026-11-24",
+   "kind": "son",
+   "esign": null,
+   "intl": null,
+   "sentence": "24 Kasım 2026"
+  },
+  {
+   "targets": [
     "1507",
     "1707"
    ],
@@ -86,6 +60,20 @@
    "esign": null,
    "intl": null,
    "sentence": "Kuruluş Bazlı Ön Kayıt Başvurusu Son Tarihi | 23 Kasım 2026 | 25 Kasım 2026 son başvuru tablosu."
+  },
+  {
+   "targets": [
+    "1812"
+   ],
+   "label": null,
+   "title": "Türkiye’nin İlk Yatırım Tabanlı Girişimcilik Destek Programı olan BiGG Yatırım Programı’nın 2026-2 Çağrısı Açıldı",
+   "url": "https://tubitak.gov.tr/tr/duyuru/turkiyenin-ilk-yatirim-tabanli-girisimcilik-destek-programi-olan-bigg-yatirim-programinin-2026-2-cagrisi-acildi",
+   "origin": "duyuru",
+   "dl": "2026-11-27",
+   "kind": "son",
+   "esign": null,
+   "intl": null,
+   "sentence": "Desteklenmeye hak kazanan girişimcilerin duyurulması | 24 Kasım 2026 – 27 Kasım 2026 son başvuru tablosu."
   },
   {
    "targets": [
