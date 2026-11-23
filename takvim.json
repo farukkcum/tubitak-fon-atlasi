@@ -1,6 +1,6 @@
 {
- "generated": "2026-11-22T15:21+03:00",
- "scanned": 112,
+ "generated": "2026-11-23T17:08+03:00",
+ "scanned": 111,
  "errors": 0,
  "items": [
   {
@@ -305,18 +305,6 @@
    "esign": null,
    "intl": null,
    "sentence": "20 Ocak 2027"
-  },
-  {
-   "targets": [],
-   "label": "Eureka çağrısı",
-   "title": "Eureka–Xecs 6. Çağrısı Açıldı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/eureka-xecs-6-cagrisi-acildi",
-   "origin": "duyuru",
-   "dl": "2027-01-21",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "21 Ocak 2027"
   },
   {
    "targets": [
