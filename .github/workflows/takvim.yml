@@ -18,15 +18,13 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  tara-ve-yayinla:
+  # 1. iş: TÜBİTAK'ı tara, takvim.json'u kaydet, siteyi paketle
+  tara:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
@@ -35,7 +33,7 @@ jobs:
 
       - name: TÜBİTAK duyurularını tara
         id: scan
-        continue-on-error: true
+        continue-on-error: true   # tarama başarısız olursa önceki takvim yayında kalır
         run: python scripts/tara.py --out takvim.json
 
       - name: takvim.json'u depoya kaydet
@@ -46,11 +44,20 @@ jobs:
           git add takvim.json
           git diff --cached --quiet || (git commit -m "Takvim: $(date -u +%F)" && git push)
 
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
 
-      - uses: actions/upload-pages-artifact@v3
+      - name: Siteyi paketle
+        uses: actions/upload-pages-artifact@v5
         with:
           path: "."
 
+  # 2. iş: paketi GitHub Pages'te yayınla
+  yayinla:
+    needs: tara
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
       - id: deploy
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
