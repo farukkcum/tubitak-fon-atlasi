@@ -1,37 +1,8 @@
 {
- "generated": "2026-11-23T17:57+03:00",
- "scanned": 111,
+ "generated": "2026-11-24T17:39+03:00",
+ "scanned": 112,
  "errors": 0,
  "items": [
-  {
-   "targets": [
-    "2209-A",
-    "2209-B"
-   ],
-   "label": null,
-   "title": "2209-A Üniversite Öğrencileri Araştırma Projeleri Destekleme Programı ve 2209-B Üniversite Öğrencileri Sanayiye Yönelik Araştırma Projeleri Desteği Programı 2026 Yılı Çağrıları Açıldı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/2209-universite-ogrencileri-arastirma-projeleri-destekleme-programi-ve-2209-b-universite-ogrencileri-sanayiye-yonelik-arastirma-projeleri-destegi-programi-2026-yili-cagrilari-acildi",
-   "origin": "duyuru",
-   "dl": "2026-11-23",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "2026 Yılı | 7 Ekim 2026 | 11 Kasım 2026 | 16 Kasım 2026 | 23 Kasım 2026 son başvuru tablosu."
-  },
-  {
-   "targets": [
-    "1071 · SBEP"
-   ],
-   "label": null,
-   "title": "Ufuk Avrupa Programı Sürdürülebilir Mavi Ekonomi Ortaklığı (SBEP) 2026 Yılı Çok Uluslu Ortak Çağrısı Başvuruya Açıldı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/ufuk-avrupa-programi-surdurulebilir-mavi-ekonomi-ortakligi-sbep-2026-yili-cok-uluslu-ortak-cagrisi-basvuruya-acildi",
-   "origin": "duyuru",
-   "dl": "2026-11-23",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "23 Kasım 2026 (23:59, TSİ)"
-  },
   {
    "targets": [
     "1071 · DUT"
@@ -60,6 +31,20 @@
    "esign": null,
    "intl": null,
    "sentence": "Kuruluş Bazlı Ön Kayıt Başvurusu Son Tarihi | 23 Kasım 2026 | 25 Kasım 2026 son başvuru tablosu."
+  },
+  {
+   "targets": [
+    "1071 · SBEP"
+   ],
+   "label": null,
+   "title": "Ufuk Avrupa Programı Sürdürülebilir Mavi Ekonomi Ortaklığı (SBEP) 2026 Yılı Çok Uluslu Ortak Çağrısı Başvuruya Açıldı",
+   "url": "https://tubitak.gov.tr/tr/duyuru/ufuk-avrupa-programi-surdurulebilir-mavi-ekonomi-ortakligi-sbep-2026-yili-cok-uluslu-ortak-cagrisi-basvuruya-acildi",
+   "origin": "duyuru",
+   "dl": "2026-11-26",
+   "kind": "son",
+   "esign": null,
+   "intl": null,
+   "sentence": "26 Kasım 2026 (23:59, TSİ)"
   },
   {
    "targets": [
