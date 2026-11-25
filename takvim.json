@@ -1,22 +1,8 @@
 {
- "generated": "2026-11-24T17:39+03:00",
+ "generated": "2026-11-25T17:00+03:00",
  "scanned": 112,
  "errors": 0,
  "items": [
-  {
-   "targets": [
-    "1071 · DUT"
-   ],
-   "label": null,
-   "title": "Ufuk Avrupa Programı Kentsel Geçişleri Sürdürülebilir Bir Geleceğe Yönlendirme Ortaklığı (DUT) 2026 Çağrısı Açıldı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/ufuk-avrupa-programi-kentsel-gecisleri-surdurulebilir-bir-gelecege-yonlendirme-ortakligi-dut-2026-cagrisi-acildi",
-   "origin": "duyuru",
-   "dl": "2026-11-24",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "24 Kasım 2026"
-  },
   {
    "targets": [
     "1507",
@@ -394,6 +380,20 @@
    "esign": null,
    "intl": null,
    "sentence": "Türkiye’den katılımcıların uluslararası başvuru formuyla birlikte TÜBİTAK 1719-Eureka Xecs Uygulamalı Kuantum Teknolojileri ulusal çağrısına 31 Mart 2027 tarihine kadar"
+  },
+  {
+   "targets": [
+    "1071 · DUT"
+   ],
+   "label": null,
+   "title": "Ufuk Avrupa Programı Kentsel Geçişleri Sürdürülebilir Bir Geleceğe Yönlendirme Ortaklığı (DUT) 2026 Çağrısı Açıldı",
+   "url": "https://tubitak.gov.tr/tr/duyuru/ufuk-avrupa-programi-kentsel-gecisleri-surdurulebilir-bir-gelecege-yonlendirme-ortakligi-dut-2026-cagrisi-acildi",
+   "origin": "duyuru",
+   "dl": "2027-04-15",
+   "kind": "son",
+   "esign": null,
+   "intl": null,
+   "sentence": "15 Nisan 2027"
   }
  ]
 }
