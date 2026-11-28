@@ -1,37 +1,8 @@
 {
- "generated": "2026-11-27T16:34+03:00",
+ "generated": "2026-11-28T15:47+03:00",
  "scanned": 112,
  "errors": 0,
  "items": [
-  {
-   "targets": [
-    "1507",
-    "1707"
-   ],
-   "label": null,
-   "title": "1507-KOBİ Ar-Ge Başlangıç Destek Programı ve 1707-Siparişe Dayalı Ar-Ge Projeleri için KOBİ Destekleme Programı 2026 Yılı Çağrılarının Süresi Uzatıldı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/1507-kobi-ar-ge-baslangic-destek-programi-ve-1707-siparise-dayali-ar-ge-projeleri-icin-kobi-destekleme-programi-2026-yili-cagrilarinin-suresi-uzatildi",
-   "origin": "duyuru",
-   "dl": "2026-11-27",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "Çağrı Kapanış Tarihi | 25 Kasım 2026* | 27 Kasım 2026 son başvuru tablosu."
-  },
-  {
-   "targets": [
-    "1812"
-   ],
-   "label": null,
-   "title": "Türkiye’nin İlk Yatırım Tabanlı Girişimcilik Destek Programı olan BiGG Yatırım Programı’nın 2026-2 Çağrısı Açıldı",
-   "url": "https://tubitak.gov.tr/tr/duyuru/turkiyenin-ilk-yatirim-tabanli-girisimcilik-destek-programi-olan-bigg-yatirim-programinin-2026-2-cagrisi-acildi",
-   "origin": "duyuru",
-   "dl": "2026-11-27",
-   "kind": "son",
-   "esign": null,
-   "intl": null,
-   "sentence": "Desteklenmeye hak kazanan girişimcilerin duyurulması | 24 Kasım 2026 – 27 Kasım 2026 son başvuru tablosu."
-  },
   {
    "targets": [
     "4006"
@@ -85,6 +56,21 @@
    "esign": null,
    "intl": null,
    "sentence": "Türkiye’den katılımcıların uluslararası başvuru formuyla birlikte TÜBİTAK 1719–Eureka Hafifletme Teknolojileri ulusal çağrısına 2 Aralık 2026 tarihine kadar"
+  },
+  {
+   "targets": [
+    "1507",
+    "1707"
+   ],
+   "label": null,
+   "title": "1507-KOBİ Ar-Ge Başlangıç Destek Programı ve 1707-Siparişe Dayalı Ar-Ge Projeleri için KOBİ Destekleme Programı 2026 Yılı Çağrılarının Süresi Uzatıldı",
+   "url": "https://tubitak.gov.tr/tr/duyuru/1507-kobi-ar-ge-baslangic-destek-programi-ve-1707-siparise-dayali-ar-ge-projeleri-icin-kobi-destekleme-programi-2026-yili-cagrilarinin-suresi-uzatildi",
+   "origin": "duyuru",
+   "dl": "2026-12-04",
+   "kind": "son",
+   "esign": null,
+   "intl": null,
+   "sentence": "Sistem hatası nedeniyle çağrı takvim süresi içerisinde proje başvurusunun yapılamaması durumunda, 1507 Programı için en geç 2 Aralık 2026, 1707 Programı için en geç 4 Aralık 2026 mesai bitimine kadar Başkanlığımıza dilekçe iletilmesi gerekmektedir."
   },
   {
    "targets": [
@@ -236,6 +222,20 @@
    "esign": null,
    "intl": null,
    "sentence": "31 Aralık 2026 (23:59, TSİ)"
+  },
+  {
+   "targets": [
+    "1812"
+   ],
+   "label": null,
+   "title": "Türkiye’nin İlk Yatırım Tabanlı Girişimcilik Destek Programı olan BiGG Yatırım Programı’nın 2026-2 Çağrısı Açıldı",
+   "url": "https://tubitak.gov.tr/tr/duyuru/turkiyenin-ilk-yatirim-tabanli-girisimcilik-destek-programi-olan-bigg-yatirim-programinin-2026-2-cagrisi-acildi",
+   "origin": "duyuru",
+   "dl": "2026-12-31",
+   "kind": "son",
+   "esign": null,
+   "intl": null,
+   "sentence": "Şirket kurulumu ve sözleşme imzalanması için son tarih | 31 Aralık 2026 son başvuru tablosu."
   },
   {
    "targets": [],
